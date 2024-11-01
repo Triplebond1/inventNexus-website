@@ -8,7 +8,7 @@ const populateSchemaMarkup = require("../../utilities/helpers/schemaMarkUp");
 // @access  Private (admin, editor, author, contributor)
 const createPageHandler = async (req, res) => {
   try {
-    const {
+    let {
       title,
       content,
       keyTakeAway,
@@ -84,7 +84,7 @@ const createPageHandler = async (req, res) => {
       status = "draft";
     }
 
-    const newPage = new Page({
+    let newPage = new Page({
       title,
       content,
       keyTakeAway,
@@ -106,13 +106,12 @@ const createPageHandler = async (req, res) => {
       previousPage,
       relatedPages,
       breadcrumbList,
-      schemaMarkup,
       social,
       publishDate: status === "published" ? Date.now() : undefined,
     });
 
-    const schemaMarkup = await populateSchemaMarkup(newPost);
-    newPost.schemaMarkup = schemaMarkup;
+    const schemaMarkup = await populateSchemaMarkup(newPage);
+    newPage.schemaMarkup = schemaMarkup;
 
     await newPage.save({ runValidators: true });
 
@@ -337,7 +336,7 @@ const updatePageHandler = async (req, res) => {
       pageOtherImages,
       featuredVideo,
       status,
-      nextPost,
+      nextPage,
       previousPage,
       relatedPages,
       breadcrumbList,

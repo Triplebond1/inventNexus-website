@@ -3,18 +3,18 @@ const mongoose = require("mongoose");
 
 const imageSchema = new mongoose.Schema(
   {
-    filename: {
+    fileName: {
       type: String,
       required: true,
       trim: true,
-      maxlength: 100,
+      maxlength: 200,
     },
 
     originalName: {
       type: String,
       required: true,
       trim: true,
-      maxlength: 100,
+      maxlength: 200,
     },
 
     url: {
@@ -25,7 +25,6 @@ const imageSchema = new mongoose.Schema(
 
     altText: {
       type: String,
-      required: true,
       trim: true,
       maxlength: 150,
     },

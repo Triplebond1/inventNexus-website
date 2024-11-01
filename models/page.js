@@ -212,7 +212,7 @@ const pageSchema = new mongoose.Schema(
 );
 
 // Middleware to automatically generate slug, permalink, postLink amd readTime
-postSchema.pre("validate", function (next) {
+pageSchema.pre("validate", function (next) {
   // Generate slug
   if (this.title && !this.slug) {
     this.slug = slugify(this.title, {
@@ -227,9 +227,9 @@ postSchema.pre("validate", function (next) {
   }
 
   // Generate postLink based on permalink
-  if (this.permalink && !this.postLink) {
+  if (this.permalink && !this.pageLink) {
     const baseUrl = process.env.BASE_URL || "https://www.inventnexus.com";
-    this.postLink = `${baseUrl}/${this.permalink}`;
+    this.pageLink = `${baseUrl}/${this.permalink}`;
   }
 
   // Generate canonicalURL based on permalink
