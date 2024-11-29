@@ -243,29 +243,41 @@ const deleteUserHandler = async (req, res) => {
 };
 
 //@desc LOGGIN user
-//@route POST /v1/api/users/:id
+//@route POST /v1/api/users/login
 //@access public
 const logInUserHandler = async (req, res) => {
   try {
-    let { email, password } = req.body;
+    let { usernameOrEmail, password } = req.body;
 
-    // Convert email to lowercase for case-insensitive lookup
-    email = email.toLowerCase();
+    let query = {};
 
-    // Validate input types
-    if (typeof email !== "string") {
-      return res.status(400).json({ message: "Email should be a string" });
+    // Validate email or username input, only one should be provided
+    if (usernameOrEmail && typeof usernameOrEmail === "string") {
+      usernameOrEmail = usernameOrEmail.toLowerCase();
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      const isValidEmail = emailRegex.test(usernameOrEmail);
+      if (isValidEmail) {
+        const email = usernameOrEmail;
+        query = { email } ;
+      } else {
+        const username = usernameOrEmail;
+        query = { username } ;
+      }
+    } else {
+      return res
+        .status(400)
+        .json({ message: "Provide either a valid email or username" });
     }
 
     if (typeof password !== "string") {
       return res.status(400).json({ message: "Password should be a string" });
     }
 
-    // Find the user by email
-    const user = await User.findOne({ email });
+    // Find the user by query
+    const user = await User.findOne( query );
     if (!user) {
       return res.status(400).json({
-        message: "Invalid email or password",
+        message: `user ${usernameOrEmail} not found`,
       });
     }
 
