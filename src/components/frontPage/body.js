@@ -26,9 +26,9 @@ export default function Body() {
         </div>
 
         {/* <brief about inventnexus/> */}
-        <div className="pb-20">
+        <div className="pb-20" id ="about-us">
           {/* <brief about inventnexus headings/> */}
-          <div className=" h-10  text-center text-blaze-orange-600 bg-transparent font-bold text-xl tracking-wider">
+          <div className=" h-10  text-center text-blaze-orange-600 bg-transparent font-bold text-xl tracking-wider" >
             {"INVENTNEXUS INC"}
           </div>
           {/* <brief about inventnexus text/> */}
@@ -43,8 +43,8 @@ export default function Body() {
           </div>
         </div>
 
-        {/* <brief about inventpedia/> */}
-        <div className=" pb-10">
+      {/* <brief about inventpedia/> */}
+        <div className=" pb-10"  id="invent-pedia">
           <div className=" h-10  text-center text-blaze-orange-600 bg-transparent font-bold text-xl tracking-wider mb-5">
             {"INVENTPEDIA"}
           </div>
@@ -98,8 +98,8 @@ export default function Body() {
         </div>
 
         {/* <inventnexus mission statement/> */}
-        <div className="pb-20">
-          <div className=" h-10  text-center text-blaze-orange-600 bg-transparent font-bold text-xl tracking-wider mb-5">
+        <div className="pb-20" id = "mission-statement">
+          <div className=" h-10  text-center text-blaze-orange-600 bg-transparent font-bold text-xl tracking-wider mb-5" >
             {"INVENTNEXUS MISSION STATEMENT"}
           </div>
 

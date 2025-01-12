@@ -19,27 +19,27 @@ const Navbar = () => {
         <div className="hidden md:flex space-x-6 font-semibold">
           <ul className="flex space-x-6 ">
             <li>
-              <Link href="/Home"
+              <Link href="/"
                 className="hover:text-blaze-orange-500">Home
               </Link>
             </li>
             <li>
-              <Link href="/About us"
+              <Link href="#about-us"
               className="hover:text-blaze-orange-500">About Us
               </Link>
             </li>
             <li>
-              <Link href="/Mission Statement"
+              <Link href="#mission-statement"
                 className="hover:text-blaze-orange-500">Mission Statement
               </Link>
             </li>
             <li>
-              <Link href="/InventPedia"
+              <Link href="#invent-pedia"
                 className="hover:text-blaze-orange-500">InventPedia
               </Link>
             </li>
             <li>
-              <Link href="/Privacy Policy"
+              <Link href="/privacy-policy"
                 className="hover:text-blaze-orange-500">Privacy Policy
               </Link>
             </li>
@@ -97,27 +97,27 @@ const Navbar = () => {
         <div className="bg-white text-black md:hidden ">
           <ul className="flex flex-col space-y-5 py-5 px-6 divide-y-2  divide-blaze-orange-400 font-semibold">
           <li className=' box-border w-full'>
-              <Link href="/Home"
+              <Link href="/"
                 className="hover:text-blaze-orange-500">Home
               </Link>
             </li>
             <li className=' box-border w-full '>
-              <Link href="/About us"
+              <Link href="#about-us"
               className="hover:text-blaze-orange-500">About Us
               </Link>
             </li>
             <li className=' box-border w-full'>
-              <Link href="/Mission Statement"
+              <Link href="#mission-statement"
                 className="hover:text-blaze-orange-500">Mission Statement
               </Link>
             </li>
             <li className=' box-border w-full'>
-              <Link href="/InventPedia"
+              <Link href="#invent-pedia"
                 className="hover:text-blaze-orange-500">InventPedia
               </Link>
             </li>
             <li className=' box-border w-full '>
-              <Link href="/Privacy Policy"
+              <Link href="/privacy-policy"
                 className="hover:text-blaze-orange-500">Privacy Policy
               </Link>
             </li>

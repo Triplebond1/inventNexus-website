@@ -2,16 +2,16 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="flex column-3 w-full items-center justify-center border-t flex-col bg-gray">
+    <footer className="flex column-3 w-full items-center justify-center border-t flex-col bg-gray pt-2">
       {/* <follow on social media column /> */}
       <div className="column-1 bg-gray ">
         <p className="font-bold text-blaze-orange-600">
-          foolow on social media
+          follow on social media
         </p>
       </div>
 
       {/* Logo Section */}
-      <div className="w-full flex justify-center mb-4">
+      <div className="w-full flex justify-center mb-4 pt-10">
         <Image
           src="/invent-logo-1.jpg"
           layout="responsive"

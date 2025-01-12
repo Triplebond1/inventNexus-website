@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import { loginUser } from "../../api/userApi"; // Ensure this is an async function
+import { loginUser } from "../api/userApi"; // Ensure this is an async function
 
 export default function LogIn() {
   const [formData, setFormData] = useState({
