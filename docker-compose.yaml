@@ -1,0 +1,37 @@
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: inventnexus-app-mongo
+    ports:
+      - "30017:27017" # Exposes MongoDB on port 30017
+    volumes:
+      - ./data/db:/data/db # Persist MongoDB data locally
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    networks:
+      - inventnexus-network
+
+  # app:
+  #   build:
+  #     context: ./ # Build from the current directory
+  #     dockerfile: Dockerfile # Specifies the Dockerfile for the backend
+  #   image: inventnexus-app:1.0
+  #   container_name: inventnexus-app
+  #   ports:
+  #     - "3000:3000" # Maps port 3000 for the backend
+  #   environment:
+  #     - NODE_ENV=${NODE_ENV}
+  #     - MONGO_URI=${MONGO_URI} # MongoDB URI for backend connection
+  #     - JWT_SECRET=${JWT_SECRET_KEY} # Secret key for authentication
+  #   depends_on:
+  #     - mongodb # Ensures MongoDB starts before the backend
+  #   networks:
+  #     - inventnexus-network
+
+networks:
+  inventnexus-network:
+    driver: bridge # Default bridge network
+
+
+    

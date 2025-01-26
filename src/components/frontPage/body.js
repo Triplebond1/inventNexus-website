@@ -4,9 +4,9 @@ import Link from "next/link";
 
 export default function Body() {
   return (
-      <div className="column">
+      <div className="column bg-white sm:w-3/4 lg:w-4/6">
         {/* propelling column /> */}
-        <div className="py-6 h-20 inline-block align-middle  text-center text-blaze-orange-950 bg-transparent font-bold text-lg tracking-wider w-full">
+        <div className="py-6 h-20 inline-block align-middle  text-center text-blaze-orange-600 bg-transparent font-bold text-lg tracking-wider w-full">
           {"propelling invention and innovation"}
         </div>
 
@@ -20,7 +20,7 @@ export default function Body() {
             alt="InventNexus logo icon"
             className="object-cover" 
           />
-          <p className="py-5 h-20  text-center text-blaze-orange-950 bg-transparent font-bold text-sm tracking-wider">
+          <p className="py-5 h-20  text-center dark:text-white text-black bg-transparent font-bold text-sm tracking-wider">
             {"Leonado Da vinci"}
           </p>
         </div>
@@ -32,7 +32,7 @@ export default function Body() {
             {"INVENTNEXUS INC"}
           </div>
           {/* <brief about inventnexus text/> */}
-          <div className="text-justify text-wrap whitespace-normal px-10 text-blaze-orange-950 bg-transparent font-bold text-sm tracking-normal">
+          <div className="text-justify text-wrap whitespace-normal px-10 dark:text-white text-black bg-transparent font-bold text-sm tracking-normal">
             {`Welcome to Inventnexus, where innovation knows no bounds.
                 We are dedicated to fostering creativity and driving global progress through inventive solutions.
                 At Inventnexus, we empower local and global innovators and inventors to tackle challenges head-on,
@@ -69,7 +69,7 @@ export default function Body() {
           </div>
 
           {/* <inventpedia text column /> */}
-          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-blaze-orange-950 bg-transparent font-bold text-sm tracking-normal">
+          <div className="text-justify text-wrap whitespace-normal py-10 px-10 dark:text-white text-black bg-transparent font-bold text-sm tracking-normal">
             {
               <div>
                 A live, breathing archive of human inventiveness, Inventpedia is
