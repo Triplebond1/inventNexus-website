@@ -15,8 +15,7 @@ const serviceAccount = {
   client_x509_cert_url: process.env.FIREBASE_CLIENT_CERT_URL,
 };
 
-// Debugging: Log the service account (remove in production)
-console.log('Service Account:', serviceAccount);
+
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
