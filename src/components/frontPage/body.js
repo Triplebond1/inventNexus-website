@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Body() {
   return (
-      <div className="column bg-white sm:w-3/4 lg:w-4/6">
+      <div className="column dark:bg-black bg-white sm:w-3/4 lg:w-4/6">
         {/* propelling column /> */}
         <div className="py-6 h-20 inline-block align-middle  text-center text-blaze-orange-600 bg-transparent font-bold text-lg tracking-wider w-full">
           {"propelling invention and innovation"}
