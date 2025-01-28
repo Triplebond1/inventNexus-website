@@ -1,4 +1,4 @@
-import { PageName } from "../../../components/pageFeature";
+import { PageName, SocialMediaLink } from "../../../components/pageFeature";
 import { FaceBookIcon, WhatsappIcon, LinkedinIcon, InstagramIcon, XIcon} from "../../svg/icons";
 import Image from "next/image";
 import Link from "next/link";
@@ -62,11 +62,11 @@ export default function profilePage() {
             <h2>SOCIAL MEDIA HANDLE</h2>
           </div>
           {/* facebook */}
-          <SocialMedia Icon={FaceBookIcon} Name={"FACEBOOK"} Href={""} />
-          <SocialMedia Icon={WhatsappIcon} Name={"WHATSAPP"} Href={""} />
-          <SocialMedia Icon={LinkedinIcon} Name={"LINKEDIN"} Href={""} />
-          <SocialMedia Icon={InstagramIcon} Name={"INSTAGRAM"} Href={""} />
-          <SocialMedia Icon={XIcon} Name={"X"} Href={""} />
+          <SocialMediaLink Icon={FaceBookIcon} Name={"FACEBOOK"} Href={""} />
+          <SocialMediaLink Icon={WhatsappIcon} Name={"WHATSAPP"} Href={""} />
+          <SocialMediaLink Icon={LinkedinIcon} Name={"LINKEDIN"} Href={""} />
+          <SocialMediaLink Icon={InstagramIcon} Name={"INSTAGRAM"} Href={""} />
+          <SocialMediaLink Icon={XIcon} Name={"X"} Href={""} />
 
           <div className="container h-5 px-2 pb-2"></div>
         </div>
@@ -103,16 +103,3 @@ const TabListLink = ({ TabName, Text, Href }) => {
   );
 };
 
-const SocialMedia = ({ Name, Icon, Href }) => {
-  return (
-    <div className="container h-12 flex items-center px-2 pb-2 border-solid border-b-white border-b-4">
-      <Link
-        href={Href}
-        className="text-blaze-orange-600 font-semibold flex justify-items-center my-auto items-center gap-2"
-      >
-        {Name}
-        <Icon />
-      </Link>
-    </div>
-  );
-};

@@ -1,16 +1,45 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const [showNavbar, setShowNavbar] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY) {
+        // Scrolling down, hide navbar
+        setShowNavbar(false);
+      } else {
+        // Scrolling up, show navbar
+        setShowNavbar(true);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [lastScrollY]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
-    <nav className="bg-white text-black outline  outline-5 outline-blaze-orange-400 sticky top-0">
+    <nav
+    className={`bg-white text-black outline outline-5 outline-blaze-orange-400 sticky top-0 w-full z-50 transition-transform duration-300 ${
+      showNavbar ? "translate-y-0" : "-translate-y-full"
+    }`}
+  >
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
         {/* Logo */}
         <div className="text-2xl font-bold text-blaze-orange-500">InventNexus</div>
@@ -24,17 +53,17 @@ const Navbar = () => {
               </Link>
             </li>
             <li>
-              <Link href="#about-us"
+              <Link href="/#about-us"
               className="hover:text-blaze-orange-500">About Us
               </Link>
             </li>
             <li>
-              <Link href="#mission-statement"
+              <Link href="/#mission-statement"
                 className="hover:text-blaze-orange-500">Mission Statement
               </Link>
             </li>
             <li>
-              <Link href="#invent-pedia"
+              <Link href="/#invent-pedia"
                 className="hover:text-blaze-orange-500">InventPedia
               </Link>
             </li>

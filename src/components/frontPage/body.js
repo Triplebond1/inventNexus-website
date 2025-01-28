@@ -32,7 +32,7 @@ export default function Body() {
             {"INVENTNEXUS INC"}
           </div>
           {/* <brief about inventnexus text/> */}
-          <div className="text-justify text-wrap whitespace-normal px-10 dark:text-white text-black bg-transparent font-bold text-sm tracking-normal">
+          <div className="text-justify text-wrap whitespace-normal px-10 dark:text-white text-black bg-transparent font-normal text-sm tracking-normal">
             {`Welcome to Inventnexus, where innovation knows no bounds.
                 We are dedicated to fostering creativity and driving global progress through inventive solutions.
                 At Inventnexus, we empower local and global innovators and inventors to tackle challenges head-on,
@@ -69,7 +69,7 @@ export default function Body() {
           </div>
 
           {/* <inventpedia text column /> */}
-          <div className="text-justify text-wrap whitespace-normal py-10 px-10 dark:text-white text-black bg-transparent font-bold text-sm tracking-normal">
+          <div className="text-justify text-wrap whitespace-normal py-10 px-10 dark:text-white text-black bg-transparent font-normal text-sm tracking-normal">
             {
               <div>
                 A live, breathing archive of human inventiveness, Inventpedia is
@@ -125,8 +125,8 @@ export default function Body() {
 
         <div className="">
           {/* <inventnexus mission statement 1 text column /> */}
-          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-white bg-blaze-orange-400 font-bold text-sm tracking-normal pb-20">
-            <p className="text-center py-2  mb-2 text-xl text-blaze-orange-950">
+          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-white bg-blaze-orange-400 font-normal text-sm tracking-normal pb-20">
+            <p className="text-center py-2 font-bold  mb-2 text-xl text-blaze-orange-950">
               IGNITE CREATIVE GENIUS
             </p>
             Our goal is to develop and spark the creative potential in people
@@ -140,8 +140,8 @@ export default function Body() {
           <div className="bg-transparent h-20"></div>
 
           {/* <inventnexus mission statement 2 text column /> */}
-          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-white bg-blaze-orange-400 font-bold text-sm tracking-normal">
-            <p className="text-center py-2  mb-2 text-xl text-blaze-orange-950">
+          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-white bg-blaze-orange-400 font-normal text-sm tracking-normal">
+            <p className="text-center py-2 font-bold mb-2 text-xl text-blaze-orange-950">
               AMPLIFY INNOVATION
             </p>
             Through helping innovators spread the word about their
@@ -155,8 +155,8 @@ export default function Body() {
           <div className="bg-transparent h-20"></div>
 
           {/* <inventnexus mission statement 3 text column /> */}
-          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-white bg-blaze-orange-400 font-bold text-sm tracking-normal">
-            <p className="text-center py-2  mb-2 text-xl text-blaze-orange-950">
+          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-white bg-blaze-orange-400 font-normal text-sm tracking-normal">
+            <p className="text-center py-2  font-bold mb-2 text-xl text-blaze-orange-950">
               CULTIVATE INVENTION CULTURE
             </p>
             Our goal is to foster innovation as a global culture. We firmly
@@ -168,8 +168,8 @@ export default function Body() {
           <div className="bg-transparent h-20"></div>
 
           {/* <inventnexus mission statement 4 text column /> */}
-          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-white bg-blaze-orange-400 font-bold text-sm tracking-normal">
-            <p className="text-center py-2  mb-2 text-xl text-blaze-orange-950">
+          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-white bg-blaze-orange-400 font-normal text-sm tracking-normal">
+            <p className="text-center py-2  font-bold mb-2 text-xl text-blaze-orange-950">
               EMPOWER ENTREPRENEURIAL JOURNEY
             </p>
             Through the provision of necessary knowledge, we enable prospective
@@ -181,8 +181,8 @@ export default function Body() {
           <div className="bg-transparent h-20"></div>
 
           {/* <inventnexus mission statement 5 text column /> */}
-          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-white bg-blaze-orange-400 font-bold text-sm tracking-normal">
-            <p className="text-center py-2  mb-2 text-xl text-blaze-orange-950">
+          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-white bg-blaze-orange-400 font-normal text-sm tracking-normal">
+            <p className="text-center py-2  font-bold mb-2 text-xl text-blaze-orange-950">
               RESURRECT INNOVATION HERITAGE
             </p>
             We are on a mission to resurrect the rich history of innovation and
@@ -194,8 +194,8 @@ export default function Body() {
           <div className="bg-transparent h-20"></div>
 
           {/* <inventnexus mission statement 6 text column /> */}
-          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-white bg-blaze-orange-400 font-bold text-sm tracking-normal">
-            <p className="text-center py-2  mb-2 text-xl text-blaze-orange-950">
+          <div className="text-justify text-wrap whitespace-normal py-10 px-10 text-white bg-blaze-orange-400 font-normal text-sm tracking-normal">
+            <p className="text-center py-2 font-bold mb-2 text-xl text-blaze-orange-950">
               CONNECT GLOBAL INNOVATION
             </p>
             We provide state-of-the-art discoveries and inventions right to your
