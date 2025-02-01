@@ -1,4 +1,4 @@
-import { PageName } from "../../../components/pageFeature";
+import { PageName } from "../../../components/pageFeature/pageFeaturesServer";
 import { Button } from "../../../components/button";
 
 

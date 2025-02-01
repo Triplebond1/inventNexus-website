@@ -17,7 +17,7 @@ import Header from "../../../components/header";
 // }
 
 export default function PostPage({}) {
-  // If no post is passed as a prop, we use some default data for demonstration.
+  // If no post is passed as a prop, we use some default data for demonstration  fjaj
   const defaultPost = {
     title: "Sample Post Title",
     content:

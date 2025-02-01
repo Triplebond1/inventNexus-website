@@ -10,7 +10,7 @@ import {
 import Image from "next/image";
 import Link from "next/link";
 
-export default function PostBody({ post }) {
+export default function Body({ post }) {
   return (
     <div className="min-h-screen dark:bg-gray-900 bg-white sm:w-4/6 bg-gray-50 flex flex-col mx-auto">
       {/* Breadcrumb Navigation */}
