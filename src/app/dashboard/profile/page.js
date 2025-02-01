@@ -61,12 +61,15 @@ export default function profilePage() {
           <div className="container mb-2 font-bold pt-2 px-2 text-blaze-orange-950 border-solid border-b-white border-b-4">
             <h2>SOCIAL MEDIA HANDLE</h2>
           </div>
-          {/* facebook */}
+          {/* social */}
+          <div className="px-2 mb-2 w-full justify-center items-center">
           <SocialMediaLink Icon={FaceBookIcon} Name={"FACEBOOK"} Href={""} />
           <SocialMediaLink Icon={WhatsappIcon} Name={"WHATSAPP"} Href={""} />
           <SocialMediaLink Icon={LinkedinIcon} Name={"LINKEDIN"} Href={""} />
           <SocialMediaLink Icon={InstagramIcon} Name={"INSTAGRAM"} Href={""} />
           <SocialMediaLink Icon={XIcon} Name={"X"} Href={""} />
+          </div>
+
 
           <div className="container h-5 px-2 pb-2"></div>
         </div>

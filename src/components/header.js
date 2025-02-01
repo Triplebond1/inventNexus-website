@@ -1,4 +1,4 @@
-
+"use client"
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
@@ -131,17 +131,17 @@ const Navbar = () => {
               </Link>
             </li>
             <li className=' box-border w-full '>
-              <Link href="#about-us"
+              <Link href="/#about-us"
               className="hover:text-blaze-orange-500">About Us
               </Link>
             </li>
             <li className=' box-border w-full'>
-              <Link href="#mission-statement"
+              <Link href="/#mission-statement"
                 className="hover:text-blaze-orange-500">Mission Statement
               </Link>
             </li>
             <li className=' box-border w-full'>
-              <Link href="#invent-pedia"
+              <Link href="/#invent-pedia"
                 className="hover:text-blaze-orange-500">InventPedia
               </Link>
             </li>
