@@ -1,4 +1,3 @@
-import { notFound } from "next/navigation";
 import { ScrollBackToTop } from "../../../components/pageFeature/pageFeaturesClient";
 import Body from "../../../components/post/body";
 import Footer from "../../../components/footer";

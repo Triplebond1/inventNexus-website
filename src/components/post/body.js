@@ -77,7 +77,7 @@ export default function PostBody({ post }) {
             <p className="text-sm text-gray-50">
               This article was originally published on{" "}
               <Link href="#" className="text-blaze-orange-600 underline">
-                Example.com
+                Example.com.ng
               </Link>
               .
             </p>
