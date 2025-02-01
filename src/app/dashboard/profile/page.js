@@ -1,5 +1,6 @@
-import { PageName, SocialMediaLink } from "../../../components/pageFeature";
-import { FaceBookIcon, WhatsappIcon, LinkedinIcon, InstagramIcon, XIcon} from "../../svg/icons";
+import { PageName} from "../../../components/pageFeature/pageFeaturesServer";
+import { SocialMediaLink } from "../../../components/pageFeature/pageFeaturesServer";
+import { FaceBookIcon, WhatsappIcon, LinkedinIcon, InstagramIcon, XIcon} from "../../../components/svg/icons";
 import Image from "next/image";
 import Link from "next/link";
 
