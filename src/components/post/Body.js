@@ -1,5 +1,5 @@
-
-import { SocialMediaLink, Accordion } from "../../components/pageFeature";
+import { SocialMediaLink } from "../pageFeature/pageFeaturesServer";
+import { Accordion } from "../pageFeature/pageFeaturesClient";
 import {
   FaceBookIcon,
   WhatsappIcon,
@@ -11,18 +11,17 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function PostBody({ post }) {
-
   return (
     <div className="min-h-screen dark:bg-gray-900 bg-white sm:w-4/6 bg-gray-50 flex flex-col mx-auto">
       {/* Breadcrumb Navigation */}
       <header className="bg-white dark:text-white shadow p-4">
         <nav className="text-sm breadcrumbs">
-          <Link href="/"  className="hover:underline">
-           Home
+          <Link href="/" className="hover:underline">
+            Home
           </Link>{" "}
           /{" "}
-          <Link href="/posts" className="hover:underline" >
-             Posts
+          <Link href="/posts" className="hover:underline">
+            Posts
           </Link>{" "}
           / <span className="text-gray-700 dark:text-white">{post.title}</span>
         </nav>
@@ -77,8 +76,8 @@ export default function PostBody({ post }) {
           <Accordion title="Article Source">
             <p className="text-sm text-gray-50">
               This article was originally published on{" "}
-              <Link href="#" className="text-blaze-orange-600 underline" >
-               Example.com
+              <Link href="#" className="text-blaze-orange-600 underline">
+                Example.com
               </Link>
               .
             </p>
@@ -101,10 +100,11 @@ export default function PostBody({ post }) {
                   height={70}
                   className="rounded-full object-cover"
                 />
-                <Link href={article.href} className="text-blaze-orange-600 hover:underline font-medium">
-                  
-                    {article.title}
-                  
+                <Link
+                  href={article.href}
+                  className="text-black dark:text-white hover:underline hover:text-blaze-orange-600  active:text-blaze-orange-600 font-medium"
+                >
+                  {article.title}
                 </Link>
               </li>
             ))}

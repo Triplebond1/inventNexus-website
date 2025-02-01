@@ -1,9 +1,20 @@
-"use client"
+import { ScrollBackToTop } from "../../../components/pageFeature/pageFeaturesClient";
+import Body from "../../../components/post/body";
+import Footer from "../../../components/footer";
+import Header from "../../../components/header";
 
-import { ScrollBackToTop } from "../../components/pageFeature";
-import Body from "../../components/post/Body";
-import Footer from "../../components/footer";
-import Header from "../../components/header";
+// export async function generateStaticParams() {
+//   const response = await fetch("https://your-backend.com/api/posts/slugs");
+//   const slugs = await response.json();
+
+//   return slugs.map((slug) => ({ slug }));
+// }
+
+// async function fetchPost(slug) {
+//   const response = await fetch(`https://your-backend.com/api/posts/${slug}`);
+//   if (!response.ok) return null;
+//   return response.json();
+// }
 
 export default function PostPage({}) {
   // If no post is passed as a prop, we use some default data for demonstration.
@@ -20,22 +31,21 @@ export default function PostPage({}) {
     ],
   };
 
-  const post =  defaultPost;
+  const post = defaultPost;
 
   // State to toggle the "Back to Top" button based on scroll position.
 
   return (
     <div className="min-h-screen w-full bg-gray-50 flex flex-col">
       {/* Header*/}
-        <Header/>
+      <Header />
       <main>
-      <Body post={post}/>
+        <Body post={post} />
       </main>
 
       {/* Footer */}
 
-        <Footer />
-       
+      <Footer />
 
       {/* Back to Top Button */}
       <ScrollBackToTop />

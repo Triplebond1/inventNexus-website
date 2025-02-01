@@ -1,7 +1,6 @@
-
 import { notFound } from "next/navigation";
-import { ScrollBackToTop } from "../../../components/pageFeature";
-import Body from "../../../components/post/Body";
+import { ScrollBackToTop } from "../../../components/pageFeature/pageFeaturesClient";
+import Body from "../../../components/post/body";
 import Footer from "../../../components/footer";
 import Header from "../../../components/header";
 
@@ -18,7 +17,11 @@ import Header from "../../../components/header";
 //   return response.json();
 // }
 
-export default async function PostPage({ params }) {
+export default async function PostPage(
+  {
+    /*params*/
+  }
+) {
   //const post = await fetchPost(params.slug);
 
   //if (!post) return notFound(); // Show 404 page if post is not found
@@ -36,7 +39,7 @@ export default async function PostPage({ params }) {
     ],
   };
 
-  const Post = params || defaultPost;
+  const Post = defaultPost;
 
   return (
     <div className="min-h-screen w-full bg-gray-50 flex flex-col">

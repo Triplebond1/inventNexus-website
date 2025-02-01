@@ -1,6 +1,6 @@
-"use client"
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+"use client";
+import { CustomLink } from "./pageFeature/pageFeaturesServer";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -34,44 +34,52 @@ const Navbar = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const homeMenu = [
+    {
+      Href: "/",
+      Text: "Home",
+    },
+
+    {
+      Href: "/#about-us",
+      Text: "About Us",
+    },
+
+    {
+      Href: "/#mission-statement",
+      Text: "Mission Statement",
+    },
+
+    {
+      Href: "/#invent-pedia",
+      Text: "InventPedia",
+    },
+
+    {
+      Href: "/privacy-policy",
+      Text: " Privacy Policy",
+    },
+  ];
   return (
     <nav
-    className={`bg-white text-black outline outline-5 outline-blaze-orange-400 sticky top-0 w-full z-50 transition-transform duration-300 ${
-      showNavbar ? "translate-y-0" : "-translate-y-full"
-    }`}
-  >
+      className={`bg-white text-black outline outline-5 outline-blaze-orange-400 sticky top-0 w-full z-50 transition-transform duration-300 ${
+        showNavbar ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
         {/* Logo */}
-        <div className="text-2xl font-bold text-blaze-orange-500">InventNexus</div>
+        <div className="text-2xl font-bold text-blaze-orange-500">
+          InventNexus
+        </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-6 font-semibold">
           <ul className="flex space-x-6 ">
-            <li>
-              <Link href="/"
-                className="hover:text-blaze-orange-500">Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/#about-us"
-              className="hover:text-blaze-orange-500">About Us
-              </Link>
-            </li>
-            <li>
-              <Link href="/#mission-statement"
-                className="hover:text-blaze-orange-500">Mission Statement
-              </Link>
-            </li>
-            <li>
-              <Link href="/#invent-pedia"
-                className="hover:text-blaze-orange-500">InventPedia
-              </Link>
-            </li>
-            <li>
-              <Link href="/privacy-policy"
-                className="hover:text-blaze-orange-500">Privacy Policy
-              </Link>
-            </li>
+            {homeMenu.map((item, index) => (
+              <li key={index}>
+                <CustomLink Href={item.Href} Text={item.Text} />
+              </li>
+            ))}
           </ul>
         </div>
 
@@ -82,7 +90,6 @@ const Navbar = () => {
             className="text-black focus:outline-none hover:bg-blaze-orange-600 "
             aria-label="Toggle Menu"
             style={{}}
-
           >
             {isMobileMenuOpen ? (
               // Close Icon
@@ -125,31 +132,12 @@ const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="bg-white text-black md:hidden ">
           <ul className="flex flex-col space-y-5 py-5 px-6 divide-y-2  divide-blaze-orange-400 font-semibold">
-          <li className=' box-border w-full'>
-              <Link href="/"
-                className="hover:text-blaze-orange-500">Home
-              </Link>
-            </li>
-            <li className=' box-border w-full '>
-              <Link href="/#about-us"
-              className="hover:text-blaze-orange-500">About Us
-              </Link>
-            </li>
-            <li className=' box-border w-full'>
-              <Link href="/#mission-statement"
-                className="hover:text-blaze-orange-500">Mission Statement
-              </Link>
-            </li>
-            <li className=' box-border w-full'>
-              <Link href="/#invent-pedia"
-                className="hover:text-blaze-orange-500">InventPedia
-              </Link>
-            </li>
-            <li className=' box-border w-full '>
-              <Link href="/privacy-policy"
-                className="hover:text-blaze-orange-500">Privacy Policy
-              </Link>
-            </li>
+            {homeMenu &&
+              homeMenu.map((item, index) => (
+                <li className=" box-border w-full" key={index}>
+                  <CustomLink Href={item.Href} Text={item.Text} />
+                </li>
+              ))}
           </ul>
         </div>
       )}

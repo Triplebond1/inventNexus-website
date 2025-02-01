@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { SocialMediaLink } from "./pageFeature";
+import { SocialMediaLink } from "./pageFeature/pageFeaturesServer";
 import { FaceBookIcon, InstagramIcon, XIcon, LinkedinIcon } from "./svg/icons";
 
 export default function Footer() {
