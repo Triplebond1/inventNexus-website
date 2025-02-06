@@ -6,13 +6,13 @@ const Comment = require("../../models/comment");
 const createCommentHandler = async (req, res) => {
   try {
     const user = req.user; // Get user making the comment
-    const { post, parentComment, content } = req.body;
+    const { postId, parentComment, content } = req.body;
 
     if (!user) {
       return res.status(401).json({ message: "User is not authenticated" });
     }
     // Validate necessary fields
-    if (!post || !content) {
+    if (!postId || !content) {
       return res
         .status(400)
         .json({ message: "Post and content are required." });
@@ -29,7 +29,7 @@ const createCommentHandler = async (req, res) => {
     }
 
     const newComment = new Comment({
-      post,
+      post: postId,
       author: user._id,
       parentComment: parentComment || null,
       content,
@@ -149,20 +149,44 @@ const getCommentsByPostHandler = async (req, res) => {
 // @access  Public
 const getAllCommentsHandler = async (req, res) => {
   try {
-    const { status } = req.query; // Optional filter for status
+    let { status, page = 1, limit = 10 } = req.query;
 
-    const query = {};
-    if (status) {
-      query.status = status; // Add status filter if provided
+    // Ensure valid integers for pagination
+    page = Math.max(1, parseInt(page, 10) || 1);
+    limit = Math.max(1, parseInt(limit, 10) || 10);
+    const skip = (page - 1) * limit;
+
+    // Construct query based on optional status filter
+    const query = status ? { status } : {};
+
+    // Fetch comments with pagination, sorting, and population
+    const [comments, totalComments] = await Promise.all([
+      Comment.find(query)
+        .populate("author", "name")
+        .populate("post", "title")
+        .sort({ createdAt: -1 }) // Newest first
+        .skip(skip)
+        .limit(limit)
+        .lean(), // Convert Mongoose documents to plain objects
+
+      Comment.countDocuments(query),
+    ]);
+
+    if (!comments.length) {
+      return res.status(404).json({ message: "No comments found" });
     }
 
-    const comments = await Comment.find(query)
-      .populate("author", "name")
-      .populate("post", "title");
-
-    res.status(200).json(comments);
+    res.status(200).json({
+      success: true,
+      page,
+      limit,
+      totalPages: Math.ceil(totalComments / limit),
+      totalComments,
+      comments,
+    });
   } catch (error) {
-    res.status(500).json({ message: "Error fetching comments", error });
+    console.error("Error fetching comments:", error);
+    res.status(500).json({ message: "Failed to fetch comments", error });
   }
 };
 

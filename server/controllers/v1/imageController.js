@@ -1,6 +1,9 @@
 const sharp = require("sharp");
 const { v4: uuidv4 } = require("uuid");
-const { uploadImageToFirebase, deleteImageFromFirebase} = require("../../utilities/helpers/firebaseStorage");
+const {
+  uploadImageToFirebase,
+  deleteImageFromFirebase,
+} = require("../../utilities/helpers/firebaseStorage");
 const Image = require("../../models/image"); // Import Image model
 
 // Upload and save optimized image data
@@ -16,13 +19,14 @@ const uploadImageHandler = async (req, res) => {
 
     if (!file) return res.status(400).json({ message: "No file provided" });
 
-    const fileOriginalName = file.originalname.split('.').slice(0, -1).join('.');
+    const fileOriginalName = file.originalname
+      .split(".")
+      .slice(0, -1)
+      .join(".");
 
-  
     // Generate a unique filename
     const fileName = `${uuidv4()}_${fileOriginalName}.webp`;
     const thumbnailFileName = `${uuidv4()}_${fileOriginalName}.webp`;
-
 
     const fileNameAlreadyExist = await Image.findOne({
       originalName: fileOriginalName,
@@ -39,7 +43,6 @@ const uploadImageHandler = async (req, res) => {
       .webp({ quality: 100 }) // Compress and convert to WebP
       .toBuffer();
 
-
     if (!mainImageBuffer) {
       return res
         .status(401)
@@ -49,7 +52,6 @@ const uploadImageHandler = async (req, res) => {
       .resize({ width: 300 }) // Resize for thumbnail
       .webp({ quality: 80 }) // Compress and convert to WebP
       .toBuffer();
-
 
     if (!thumbnailBuffer) {
       return res
@@ -64,7 +66,10 @@ const uploadImageHandler = async (req, res) => {
         .json({ message: "main image uploading to firebase not succecssful" });
     }
 
-    const thumbnailUrl = await uploadImageToFirebase(thumbnailFileName, thumbnailBuffer);
+    const thumbnailUrl = await uploadImageToFirebase(
+      thumbnailFileName,
+      thumbnailBuffer
+    );
     if (!thumbnailUrl) {
       return res.status(401).json({
         message: "thumbnail image uploading to firebase not succecssful",
@@ -121,14 +126,37 @@ const getImageHandler = async (req, res) => {
 
 const getAllImageHandler = async (req, res) => {
   try {
-    const image = await Image.find().populate("uploadedBy", "username");
+    let { page = 1, limit = 10 } = req.query;
 
-    if (!image) return res.status(404).json({ message: "Image not found" });
+    page = Math.max(1, parseInt(page)); // Ensure page is at least 1
+    limit = Math.max(1, parseInt(limit)); // Ensure limit is at least 1
 
-    res.status(200).json({ image });
+    const skip = (page - 1) * limit;
+
+    // Fetch images and total count
+    const [images, total] = await Promise.all([
+      Image.find()
+        .populate("uploadedBy", "username")
+        .skip(skip)
+        .limit(limit)
+        .lean(), // Convert Mongoose docs to plain objects
+      Image.countDocuments(),
+    ]);
+
+    if (!images.length)
+      return res.status(404).json({ message: "No images found" });
+
+    res.status(200).json({
+      success: true,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+      totalImages: total,
+      images,
+    });
   } catch (error) {
-    console.error("Error fetching image:", error);
-    res.status(500).json({ message: "Failed to fetch image", error });
+    console.error("Error fetching images:", error);
+    res.status(500).json({ message: "Failed to fetch images", error });
   }
 };
 
@@ -168,16 +196,17 @@ const deleteImageHandler = async (req, res) => {
     }
     const image = await Image.findById(id);
 
-
     if (!image) return res.status(404).json({ message: "Image not found" });
 
     // Delete from Firebase Storage
-    const filename = image.fileName
+    const filename = image.fileName;
 
     const removeImageFromFirebase = await deleteImageFromFirebase(filename);
 
     if (removeImageFromFirebase == false) {
-      return res.status(401).json({message: "could not delete image from firebase"})
+      return res
+        .status(401)
+        .json({ message: "could not delete image from firebase" });
     }
 
     // Remove from MongoDB

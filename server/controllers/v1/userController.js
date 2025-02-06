@@ -1,4 +1,3 @@
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../../models/user");
 const dotenv = require("dotenv");
@@ -88,7 +87,7 @@ const createUserHandler = async (req, res) => {
 
 // @desc    Get a single user by ID
 // @route   GET /v1/api/users/:id
-// @access  Private (Admin and the user themselves)
+// @access  Public ()
 const getUserHandler = async (req, res) => {
   try {
     const userId = req.params.id;
@@ -97,11 +96,6 @@ const getUserHandler = async (req, res) => {
     if (typeof userId !== "string") {
       return res.status(400).json({ message: "ID must be a string" });
     }
-
-    // // Check if the requester is admin or the user themselves
-    // if (req.user.role !== "admin" || req.user._id.toString() !== userId) {
-    //   return res.status(403).json({ message: "Access denied" });
-    // }
 
     // Find user by ID and exclude password from the result
     const user = await User.findById(userId).select("-password");
@@ -127,10 +121,24 @@ const getAllUsersHandler = async (req, res) => {
       return res.status(403).json({ message: "Access denied" });
     }
 
-    // Find all users and exclude their passwords
-    const users = await User.find().select("-password");
+    // Get pagination parameters (default: page 1, limit 10)
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
 
-    return res.status(200).json(users);
+    // Fetch users with pagination, excluding passwords
+    const users = await User.find().select("-password").skip(skip).limit(limit);
+
+    // Get total count for pagination metadata
+    const totalUsers = await User.countDocuments();
+
+    return res.status(200).json({
+      success: true,
+      currentPage: page,
+      totalPages: Math.ceil(totalUsers / limit),
+      totalUsers,
+      data: users,
+    });
   } catch (error) {
     return res.status(500).json({ message: "Internal server error", error });
   }
@@ -164,7 +172,6 @@ const updateUserHandler = async (req, res) => {
     email = email ? email.toLowerCase() : undefined;
     role = role ? role.toLowerCase() : undefined;
 
-    
     const user = await User.findById(userId);
 
     if (!user) {
@@ -247,84 +254,10 @@ const deleteUserHandler = async (req, res) => {
   }
 };
 
-//@desc LOGGIN user
-//@route POST /v1/api/users/login
-//@access public
-const logInUserHandler = async (req, res) => {
-  try {
-    let { usernameOrEmail, password } = req.body;
-
-    let query = {};
-
-    // Validate email or username input, only one should be provided
-    if (usernameOrEmail && typeof usernameOrEmail === "string") {
-      usernameOrEmail = usernameOrEmail.toLowerCase();
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const isValidEmail = emailRegex.test(usernameOrEmail);
-      if (isValidEmail) {
-        const email = usernameOrEmail;
-        query = { email };
-      } else {
-        const username = usernameOrEmail;
-        query = { username };
-      }
-    } else {
-      return res
-        .status(400)
-        .json({ message: "Provide either a valid email or username" });
-    }
-
-    if (typeof password !== "string") {
-      return res.status(400).json({ message: "Password should be a string" });
-    }
-
-    // Find the user by query
-    const user = await User.findOne(query);
-    if (!user) {
-      return res.status(400).json({
-        message: `user ${usernameOrEmail} not found`,
-      });
-    }
-
-    // Compare passwords using bcrypt
-    const isPasswordValid = await bcrypt.compare(password, user.password);
-    if (!isPasswordValid) {
-      return res.status(400).json({ message: "Invalid email or password" });
-    }
-
-    // Create the JWT payload
-    const payload = {
-      id: user._id,
-      email: user.email,
-      role: user.role,
-    };
-
-    // Sign the JWT token
-    const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
-      expiresIn: "7d", // Token valid for 7 days
-    });
-
-    // Return the token and user info
-    res.status(200).json({
-      token,
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-        role: user.role,
-      },
-    });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Internal server error", error });
-  }
-};
-
 module.exports = {
   getUserHandler,
   getAllUsersHandler,
   createUserHandler,
   updateUserHandler,
   deleteUserHandler,
-  logInUserHandler,
 };

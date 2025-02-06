@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const userRoute = require("../route/v1/userRoute");
+const authRoute = require("../route/v1/authRoute");
 const postRoute = require("../route/v1/postRoute");
 const tagRoute = require("../route/v1/tagRoute");
 const categoryRoute = require("../route/v1/categoryRoute");
@@ -17,6 +18,7 @@ app.use(express.json());
 
 //Routes
 app.use("/v1/api/users", userRoute);
+app.use("/v1/api/auth", authRoute);
 app.use("/v1/api/posts", postRoute);
 app.use("/v1/api/tags", tagRoute);
 app.use("/v1/api/categories", categoryRoute);

@@ -2,161 +2,185 @@ const axios = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const Url = `${process.env.INVENT_NEXUS_API}/post`;
+const Url = `${process.env.INVENT_NEXUS_API}/page`;
 
-export const createPost = async (title, content, keyTakeAway, summary) => {
-  const url = `${Url}`;
-  try {
-    const data = { title, content, keyTakeAway, summary };
-
-    const response = await axios.post(url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
-
-    console.log("POST request successful. Response:", response.data);
-    return response.data;
-  } catch (error) {
-    console.error(
-      "Error in POST request:",
-      error.response?.data || error.message
-    );
-    return { success: false, message: error.message };
-  }
-};
-
-export const getPostById = async (postId) => {
-  const url = `${Url}/${postId}`;
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
-
-    console.log("GET request successful. Response:", response.data);
-    return response.data;
-  } catch (error) {
-    console.error(
-      "Error in GET request:",
-      error.response?.data || error.message
-    );
-    return { success: false, message: error.message };
-  }
-};
-
-export const getAllPost = async (
-  permalink,
-  author,
-  category,
-  status,
-  tag,
-  startDate,
-  endDate
-) => {
-  const url = `${process.env.INVENT_NEXUS_API}/posts`;
-
-  try {
-    const params = {
-      permalink,
-      author,
-      category,
-      status,
-      tag,
-      startDate,
-      endDate,
-    };
-
-    const response = await axios.get(url, {
-      params, // Axios automatically formats the query parameters
-      headers: {
-        Accept: "application/json",
-      },
-    });
-
-    console.log("GET request successful. Response:", response.data);
-    return response.data;
-  } catch (error) {
-    console.error(
-      "Error in GET request:",
-      error.response?.data || error.message
-    );
-    return { success: false, message: error.message };
-  }
-};
-
-export const updatePostStatus = async (postId, status) => {
-  const url = `${process.env.INVENT_NEXUS_API}/post/${postId}`;
-  try {
-    const data = {
-      status,
-    };
-
-    const response = await axios.put(url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
-
-    console.log("POST request successful. Response:", response.data);
-    return response.data;
-  } catch (error) {
-    console.error(
-      "Error in POST request:",
-      error.response?.data || error.message
-    );
-    // Handle specific errors here, e.g., if error.response exists, log status code
-    return { success: false, message: error.message };
-  }
-};
-
-export const updatePost = async (
-  postId,
+export const createPage = async (
   title,
   content,
   keyTakeAway,
   summary,
-  postContributor,
+  slug,
+  pageContributor,
   metaDescription,
-  parentPost,
+  parentPage,
   focuskeywords,
   categories,
   tags,
   featuredImage,
   coverImage,
-  postOtherImages,
+  pageOtherImages,
   featuredVideo,
   status,
-  nextPost,
-  previousPost,
-  relatedPosts,
-  breadcrumbList
+  nextPage,
+  previousPage,
+  relatedPages,
+  breadcrumbList,
+  social
 ) => {
-  const url = `${process.env.INVENT_NEXUS_API}/posts/${postId}`;
+  const data = {
+    title,
+    content,
+    keyTakeAway,
+    summary,
+    slug,
+    pageContributor,
+    metaDescription,
+    parentPage,
+    focuskeywords,
+    categories,
+    tags,
+    featuredImage,
+    coverImage,
+    pageOtherImages,
+    featuredVideo,
+    status,
+    nextPage,
+    previousPage,
+    relatedPages,
+    breadcrumbList,
+    social,
+  };
   try {
-    const data = {  title,
-      content,
-      keyTakeAway,
-      summary,
-      postContributor,
-      metaDescription,
-      parentPost,
-      focuskeywords,
-      categories,
-      tags,
-      featuredImage,
-      coverImage,
-      postOtherImages,
-      featuredVideo,
-      status,
-      nextPost,
-      previousPost,
-      relatedPosts,
-      breadcrumbList, };
+    const data = { title, content, keyTakeAway, summary };
 
+    const response = await axios.post(Url, data, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    });
+
+    console.log("POST request successful. Response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error in create page:",
+      error.response?.data || error.message
+    );
+    return { success: false, message: error.message };
+  }
+};
+
+export const getPageById = async (pageId) => {
+  const url = `${Url}/${pageId}`;
+  try {
+    const response = await axios.get(url, {
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    console.log("GET request successful. Response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error in get page by ID:",
+      error.response?.data || error.message
+    );
+    return { success: false, message: error.message };
+  }
+};
+
+export const getAllPage = async () => {
+  try {
+    const response = await axios.get(Url, {
+      headers: {
+        Accept: "application/json",
+      },
+    });
+
+    console.log("GET request successful. Response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error in get all pages:",
+      error.response?.data || error.message
+    );
+    return { success: false, message: error.message };
+  }
+};
+
+export const updatePageStatus = async (pageId, status) => {
+  const url = `${Url}/${pageId}`;
+  const data = { status };
+  try {
+    const response = await axios.patch(url, data, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    });
+
+    console.log("PATCH request successful. Response:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error in update page status:",
+      error.response?.data || error.message
+    );
+    return { success: false, message: error.message };
+  }
+};
+
+export const updatePage = async (
+  pageId,
+  title,
+  content,
+  keyTakeAway,
+  summary,
+  slug,
+  pageContributor,
+  metaDescription,
+  parentPage,
+  focuskeywords,
+  categories,
+  tags,
+  featuredImage,
+  coverImage,
+  pageOtherImages,
+  featuredVideo,
+  status,
+  nextPage,
+  previousPage,
+  relatedPages,
+  breadcrumbList,
+  social
+) => {
+  const url = `${Url}/${pageId}`;
+  const data = {
+    title,
+    content,
+    keyTakeAway,
+    summary,
+    slug,
+    pageContributor,
+    metaDescription,
+    parentPage,
+    focuskeywords,
+    categories,
+    tags,
+    featuredImage,
+    coverImage,
+    pageOtherImages,
+    featuredVideo,
+    status,
+    nextPage,
+    previousPage,
+    relatedPages,
+    breadcrumbList,
+    social,
+  };
+  try {
     const response = await axios.put(url, data, {
       headers: {
         Accept: "application/json",
@@ -164,19 +188,19 @@ export const updatePost = async (
       },
     });
 
-    console.log("PUT request successful. Response:", response.data);
+    console.log("POST request successful. Response:", response.data);
     return response.data;
   } catch (error) {
     console.error(
-      "Error in PUT request:",
+      "Error in updating page:",
       error.response?.data || error.message
     );
     return { success: false, message: error.message };
   }
 };
 
-export const deletePost = async (postId) => {
-  const url = `${process.env.INVENT_NEXUS_API}/posts/${postId}`;
+export const deletePage = async (pageId) => {
+  const url = `${Url}/${pageId}`;
   try {
     const response = await axios.delete(url, {
       headers: {
@@ -188,7 +212,7 @@ export const deletePost = async (postId) => {
     return response.data;
   } catch (error) {
     console.error(
-      "Error in DELETE request:",
+      "Error in deleting page:",
       error.response?.data || error.message
     );
     return { success: false, message: error.message };

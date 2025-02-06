@@ -1,41 +1,51 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
-export default async function handler(req, res) {
-  const { usernameOrEmail, password } = req.body;
-  const url = `${process.env.INVENT_NEXUS_API}/users/login`;
+export default async function loginUser(usernameOrEmail, password) {
+  const url = `${process.env.INVENT_NEXUS_API}/auth/login`;
+  const data = { usernameOrEmail, password };
 
   try {
-    const response = await axios.post(url, { usernameOrEmail, password });
+    const response = await axios.post(url, data, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    });
+
+    if (response.status !== 200) {
+      return {
+        success: false,
+        message: response.data?.message || "Login failed",
+      };
+    }
+
     const token = response.data?.token;
 
     if (token) {
-      res.setHeader("Set-Cookie", `token=${token}; HttpOnly; Secure; Path=/; SameSite=Strict`);
-      return res.status(200).json({ success: true, message: "Logged in successfully" });
+      // Save token as a cookie
+      Cookies.set("authToken", token, { expires: 7 });
+
+      // Set token to header for all requests
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
+      return {
+        success: true,
+        message: "Logged in successfully",
+        token,
+      };
     } else {
-      return res.status(400).json({ success: false, message: "Token missing in response" });
+      return {
+        success: false,
+        message: "Token missing in response",
+      };
     }
   } catch (error) {
-    return res.status(400).json({ success: false, message: error.response?.data || error.message });
+    console.error("Error in login:", error.response?.data || error.message);
+    return {
+      success: false,
+      message: error.response?.data?.message || error.message,
+    };
   }
-}
-
-
-// const loginUser = async (usernameOrEmail, password) => {
-//     try {
-//       const response = await fetch("/api/auth/login", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ usernameOrEmail, password }),
-//       });
-  
-//       const data = await response.json();
-//       if (data.success) {
-//         console.log("Logged in successfully");
-//       } else {
-//         console.error("Login failed:", data.message);
-//       }
-//     } catch (error) {
-//       console.error("Error in login:", error);
-//     }
-//   };
+};
   

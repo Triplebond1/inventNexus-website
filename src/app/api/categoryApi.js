@@ -2,121 +2,97 @@ const axios = require("axios");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const Url = `${process.env.INVENT_NEXUS_API}/users`;
+const Url = `${process.env.INVENT_NEXUS_API}/categories`;
 
-export const createUser = async (username, email, password) => {
-  const url = `${Url}`;
-  const data = { username, email, password };
+export const createCategory = async (name, description) => {
+  const data = { name, description };
   try {
-    const response = await axios.post(url, data, {
+    const response = await axios.post(Url, data, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTF-8",
       },
     });
-
-    console.log("POST request successful. Response:", response.data);
     return response.data;
   } catch (error) {
     console.error(
-      "Error in POST request:",
+      "Error creating category:",
       error.response?.data || error.message
     );
     return { success: false, message: error.message };
   }
 };
 
-export const getUser = async (userId) => {
-  if (!userId) {
-    console.error("User ID is required");
-    return { success: false, message: "User ID is required" };
-  }
-  const url = `${Url}/${userId}`;
+export const getCategoryById = async (categoryId) => {
+  const url = `${Url}/${categoryId}`;
   try {
     const response = await axios.get(url, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
-
-    console.log("GET request successful. Response:", response.data);
-    return response.data;
-  } catch (error) {
-    console.error(
-      "Error in GET request:",
-      error.response?.data || error.message
-    );
-    return { success: false, message: error.message };
-  }
-};
-
-export const getAllUsers = async () => {
-  const url = `${Url}`;
-  try {
-    const response = await axios.get(url, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
-
-    console.log("GET request successful. Response:", response.data);
-    return response.data;
-  } catch (error) {
-    console.error(
-      "Error in GET request:",
-      error.response?.data || error.message
-    );
-    return { success: false, message: error.message };
-  }
-};
-
-export const updateUser = async (
-  userId,
-  username,
-  email,
-  password,
-  role,
-  profilePicture
-) => {
-  const url = `${Url}/${userId}`;
-  const updateData = { username, email, password, role, profilePicture };
-  try {
-    const response = await axios.put(url, updateData, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTF-8",
       },
     });
-
-    console.log("PUT request successful. Response:", response.data);
     return response.data;
   } catch (error) {
     console.error(
-      "Error in PUT request:",
+      "Error fetching category by ID:",
       error.response?.data || error.message
     );
     return { success: false, message: error.message };
   }
 };
 
-export const deleteUser = async (userId) => {
-  if (!userId) {
-    console.error("User ID is required");
-    return { success: false, message: "User ID is required" };
+export const getAllCategories = async () => {
+  try {
+    const response = await axios.get(Url, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error fetching all categories:",
+      error.response?.data || error.message
+    );
+    return { success: false, message: error.message };
   }
-  const url = `${Url}/${userId}`;
+};
+
+export const updateCategory = async (categoryId, name, description) => {
+  const url = `${Url}/${categoryId}`;
+  const data = { name, description };
+  try {
+    const response = await axios.put(url, data, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error updating category:",
+      error.response?.data || error.message
+    );
+    return { success: false, message: error.message };
+  }
+};
+
+export const deleteCategory = async (categoryId) => {
+  const url = `${Url}/${categoryId}`;
   try {
     const response = await axios.delete(url, {
       headers: {
         Accept: "application/json",
+        "Content-Type": "application/json;charset=UTF-8",
       },
     });
-
-    console.log("DELETE request successful. Response:", response.data);
     return response.data;
   } catch (error) {
     console.error(
-      "Error in DELETE request:",
+      "Error deleting category:",
       error.response?.data || error.message
     );
     return { success: false, message: error.message };
