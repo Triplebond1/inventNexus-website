@@ -4,17 +4,20 @@ dotenv.config();
 
 const Url = `${process.env.INVENT_NEXUS_API}/post`;
 
+const headers = {
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json;charset=UTF-8",
+  },
+  withCredentials: true,
+};
+
 export const createPost = async (title, content, keyTakeAway, summary) => {
   const url = `${Url}`;
   try {
     const data = { title, content, keyTakeAway, summary };
 
-    const response = await axios.post(url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.post(url, data, headers);
 
     console.log("POST request successful. Response:", response.data);
     return response.data;
@@ -94,12 +97,7 @@ export const updatePostStatus = async (postId, status) => {
       status,
     };
 
-    const response = await axios.put(url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.put(url, data, headers);
 
     console.log("POST request successful. Response:", response.data);
     return response.data;
@@ -137,7 +135,8 @@ export const updatePost = async (
 ) => {
   const url = `${process.env.INVENT_NEXUS_API}/posts/${postId}`;
   try {
-    const data = {  title,
+    const data = {
+      title,
       content,
       keyTakeAway,
       summary,
@@ -155,14 +154,10 @@ export const updatePost = async (
       nextPost,
       previousPost,
       relatedPosts,
-      breadcrumbList, };
+      breadcrumbList,
+    };
 
-    const response = await axios.put(url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.put(url, data, headers);
 
     console.log("PUT request successful. Response:", response.data);
     return response.data;
@@ -178,11 +173,7 @@ export const updatePost = async (
 export const deletePost = async (postId) => {
   const url = `${process.env.INVENT_NEXUS_API}/posts/${postId}`;
   try {
-    const response = await axios.delete(url, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
+    const response = await axios.delete(url, headers);
 
     console.log("DELETE request successful. Response:", response.data);
     return response.data;

@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const userRoute = require("../route/v1/userRoute");
 const authRoute = require("../route/v1/authRoute");
 const postRoute = require("../route/v1/postRoute");
@@ -15,6 +16,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(cookieParser());
 
 //Routes
 app.use("/v1/api/users", userRoute);

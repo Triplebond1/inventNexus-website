@@ -4,6 +4,14 @@ dotenv.config();
 
 const Url = `${process.env.INVENT_NEXUS_API}/page`;
 
+const headers = {
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json;charset=UTF-8",
+  },
+  withCredentials: true,
+};
+
 export const createPage = async (
   title,
   content,
@@ -53,12 +61,7 @@ export const createPage = async (
   try {
     const data = { title, content, keyTakeAway, summary };
 
-    const response = await axios.post(Url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.post(Url, data, headers);
 
     console.log("POST request successful. Response:", response.data);
     return response.data;
@@ -74,11 +77,7 @@ export const createPage = async (
 export const getPageById = async (pageId) => {
   const url = `${Url}/${pageId}`;
   try {
-    const response = await axios.get(url, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
+    const response = await axios.get(url, headers);
 
     console.log("GET request successful. Response:", response.data);
     return response.data;
@@ -93,11 +92,7 @@ export const getPageById = async (pageId) => {
 
 export const getAllPage = async () => {
   try {
-    const response = await axios.get(Url, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
+    const response = await axios.get(Url, headers);
 
     console.log("GET request successful. Response:", response.data);
     return response.data;
@@ -114,12 +109,7 @@ export const updatePageStatus = async (pageId, status) => {
   const url = `${Url}/${pageId}`;
   const data = { status };
   try {
-    const response = await axios.patch(url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.patch(url, data, headers);
 
     console.log("PATCH request successful. Response:", response.data);
     return response.data;
@@ -181,12 +171,7 @@ export const updatePage = async (
     social,
   };
   try {
-    const response = await axios.put(url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.put(url, data, headers);
 
     console.log("POST request successful. Response:", response.data);
     return response.data;
@@ -202,11 +187,7 @@ export const updatePage = async (
 export const deletePage = async (pageId) => {
   const url = `${Url}/${pageId}`;
   try {
-    const response = await axios.delete(url, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
+    const response = await axios.delete(url, headers);
 
     console.log("DELETE request successful. Response:", response.data);
     return response.data;

@@ -4,6 +4,14 @@ dotenv.config();
 
 const Url = `${process.env.INVENT_NEXUS_API}/profile`;
 
+const headers = {
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json;charset=UTF-8",
+  },
+  withCredentials: true,
+};
+
 export const createProfile = async (
   website,
   inventnexusPage,
@@ -14,12 +22,7 @@ export const createProfile = async (
   const url = `${Url}`;
   const data = { website, inventnexusPage, location, social, bio };
   try {
-    const response = await axios.post(url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.post(url, data, headers);
     return response.data;
   } catch (error) {
     console.error(
@@ -82,12 +85,7 @@ export const updateProfile = async (
     bio,
   };
   try {
-    const response = await axios.put(url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.put(url, data, headers);
     return response.data;
   } catch (error) {
     console.error(
@@ -99,24 +97,20 @@ export const updateProfile = async (
 };
 
 export const deleteProfile = async (userId) => {
-    if (!userId) {
-        console.error("user Id is required");
-        return { success: false, message: "user Id is required" };
-    }
+  if (!userId) {
+    console.error("user Id is required");
+    return { success: false, message: "user Id is required" };
+  }
 
-    const url = `${Url}/${userId}`;
-    try {
-        const response = await axios.delete(url, {
-            headers: {
-                Accept: "application/json",
-            },
-        });
-        return response.data;
-    } catch (error) {
-        console.error(
-            "Error in DELETE request:",
-            error.response?.data || error.message
-        );
-        return { success: false, message: error.message };
-    }
+  const url = `${Url}/${userId}`;
+  try {
+    const response = await axios.delete(url, headers);
+    return response.data;
+  } catch (error) {
+    console.error(
+      "Error in DELETE request:",
+      error.response?.data || error.message
+    );
+    return { success: false, message: error.message };
+  }
 };

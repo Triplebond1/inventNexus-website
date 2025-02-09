@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { loginUser } from "../api/userApi"; // Ensure this is an async function
 
 export default function LogIn() {
@@ -9,6 +10,8 @@ export default function LogIn() {
     password: "",
     remember: false,
   });
+
+  const router = useRouter();
 
   const [errors, setErrors] = useState({});
 
@@ -47,11 +50,15 @@ export default function LogIn() {
 
     // Attempt to login
     try {
-      const response = await loginUser(formData.usernameOrEmail, formData.password);
+      const response = await loginUser(
+        formData.usernameOrEmail,
+        formData.password
+      );
       if (!response.success) {
         setErrors({ form: response.message });
       } else {
         alert("Logged in successfully!");
+        router.push("/dashboard");
       }
     } catch (error) {
       setErrors({ form: "An unexpected error occurred. Please try again." });
@@ -61,7 +68,9 @@ export default function LogIn() {
   return (
     <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-r from-blaze-orange-100 to-blaze-orange-200">
       <div className="grid grid-cols-1 w-4/6 max-w-md p-6 bg-white rounded-lg shadow-lg place-items-center">
-        <h2 className="text-2xl font-semibold mb-4 text-blaze-orange-600">Log In</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-blaze-orange-600">
+          Log In
+        </h2>
         <form onSubmit={handleSubmit} className="w-full space-y-4">
           {/* Username or Email Field */}
           <div>
@@ -94,7 +103,9 @@ export default function LogIn() {
           </div>
 
           {/* General Form Error */}
-          {errors.form && <p className="text-red-500 text-center">{errors.form}</p>}
+          {errors.form && (
+            <p className="text-red-500 text-center">{errors.form}</p>
+          )}
 
           {/* Remember Me */}
           <div className="flex items-center justify-between">
@@ -121,7 +132,10 @@ export default function LogIn() {
           {/* Signup Link */}
           <p className="text-center text-sm text-gray-600 mt-4">
             Don’t have an account?{" "}
-            <Link href="/signup" className="text-blaze-orange-500 hover:underline">
+            <Link
+              href="/signup"
+              className="text-blaze-orange-500 hover:underline"
+            >
               Sign up
             </Link>
           </p>

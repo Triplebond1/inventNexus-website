@@ -5,6 +5,14 @@ dotenv.config();
 
 const Url = `${process.env.INVENT_NEXUS_API}/images`;
 
+const headers = {
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json;charset=UTF-8",
+  },
+  withCredentials: true,
+};
+
 export const uploadImage = async (
   file,
   altText,
@@ -23,11 +31,7 @@ export const uploadImage = async (
   formData.append("keywords", keywords);
 
   try {
-    const response = await axios.post(url, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.post(url, formData, headers);
     if (response.status === 200) {
       return { success: true, data: response.data };
     } else {
@@ -101,11 +105,7 @@ export const updateImage = async (
   formData.append("keywords", keywords);
 
   try {
-    const response = await axios.put(url, formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.put(url, formData, headers);
     return response.status === 200
       ? { success: true, data: response.data }
       : { success: false, message: "Failed to update image" };
@@ -124,7 +124,7 @@ export const deleteImage = async (ImageId) => {
   const url = `${Url}/${ImageId}`;
 
   try {
-    const response = await axios.delete(url);
+    const response = await axios.delete(url, headers);
     return response.status === 200
       ? { success: true, message: "Image deleted successfully" }
       : { success: false, message: "Failed to delete image" };

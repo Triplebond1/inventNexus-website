@@ -1,58 +1,41 @@
-
 const jwt = require("jsonwebtoken");
-const  User  = require("../../models/user");
+const User = require("../../models/user");
 const dotenv = require("dotenv");
 
 dotenv.config();
 
 const validateToken = async (req, res, next) => {
   try {
-    // Check for the authorization header
-    const authHeader = req.headers.authorization;
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return res.status(401).json({
-        message: "Authorization header is missing or invalid",
-      });
-    }
+    // Retrieve token from cookies
+    const token = req.cookies?.authToken;
 
-    // Extract token from the header
-    const token = authHeader.split(" ")[1];
     if (!token) {
-      return res.status(401).json({
-        message: "Token not found",
-      });
+      return res.status(401).json({ message: "Authentication token is missing" });
     }
 
-    // Verify token
+    // Verify JWT Token
     const payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
-    if (!payload) {
-      return res.status(401).json({
-        message: "Invalid token",
-      });
+    if (!payload?.id) {
+      return res.status(401).json({ message: "Invalid token" });
     }
 
-    // Find user by token's payload (user ID)
-    const user = await User.findById(payload.id);
+    // Find user (fetching only necessary fields)
+    const user = await User.findById(payload.id).select("-password");
     if (!user) {
-      return res.status(404).json({
-        message: "User not found",
-      });
+      return res.status(404).json({ message: "User not found" });
     }
 
-    // Attach the user object to the request for future use
+    // Attach user to request
     req.user = user;
     next();
   } catch (error) {
     if (error.name === "TokenExpiredError") {
-      return res.status(401).json({ message: "Token has expired" });
+      return res.status(401).json({ message: "Token has expired. Please log in again." });
     } else if (error.name === "JsonWebTokenError") {
-      return res.status(401).json({ message: "Invalid token" });
+      return res.status(401).json({ message: "Invalid token. Authentication failed." });
     }
     return res.status(500).json({ message: "Internal server error", error: error.message });
   }
 };
 
-module.exports = {
-  validateToken,
-};
-
+module.exports = { validateToken };

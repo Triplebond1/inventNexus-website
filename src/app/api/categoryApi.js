@@ -3,16 +3,17 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const Url = `${process.env.INVENT_NEXUS_API}/categories`;
+const headers = { headers: {
+  Accept: "application/json",
+  "Content-Type": "application/json;charset=UTF-8",
+},
+withCredentials: true,
+} 
 
 export const createCategory = async (name, description) => {
   const data = { name, description };
   try {
-    const response = await axios.post(Url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.post(Url, data, headers);
     return response.data;
   } catch (error) {
     console.error(
@@ -26,12 +27,7 @@ export const createCategory = async (name, description) => {
 export const getCategoryById = async (categoryId) => {
   const url = `${Url}/${categoryId}`;
   try {
-    const response = await axios.get(url, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.get(url, headers);
     return response.data;
   } catch (error) {
     console.error(
@@ -44,12 +40,7 @@ export const getCategoryById = async (categoryId) => {
 
 export const getAllCategories = async () => {
   try {
-    const response = await axios.get(Url, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.get(Url, headers);
     return response.data;
   } catch (error) {
     console.error(
@@ -64,12 +55,7 @@ export const updateCategory = async (categoryId, name, description) => {
   const url = `${Url}/${categoryId}`;
   const data = { name, description };
   try {
-    const response = await axios.put(url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.put(url, data, headers);
     return response.data;
   } catch (error) {
     console.error(
@@ -83,12 +69,7 @@ export const updateCategory = async (categoryId, name, description) => {
 export const deleteCategory = async (categoryId) => {
   const url = `${Url}/${categoryId}`;
   try {
-    const response = await axios.delete(url, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.delete(url, headers);
     return response.data;
   } catch (error) {
     console.error(

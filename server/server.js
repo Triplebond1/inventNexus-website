@@ -16,7 +16,7 @@ const handle = nextApp.getRequestHandler();
     await nextApp.prepare();
 
     // Connect to MongoDB
-   // await connectDB();
+   //await connectDB();
 
     // Create Express server
     const server = express();

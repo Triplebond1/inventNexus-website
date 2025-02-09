@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { createUser } from "../api/userApi";
 
 export default function SignUp() {
   const [formData, setFormData] = useState({
@@ -11,6 +13,8 @@ export default function SignUp() {
     remember: false,
   });
   const [errors, setErrors] = useState({});
+
+  const router = useRouter();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -28,7 +32,7 @@ export default function SignUp() {
     e.preventDefault();
 
     const newErrors = {};
-    if (!formData.password ) {
+    if (!formData.password) {
       newErrors.password = "Password is required!";
     }
     if (!formData.confirmPassword) {
@@ -54,8 +58,33 @@ export default function SignUp() {
       setErrors(newErrors);
       return;
     }
-    console.log("Form Submitted", formData);
+
     // Add submit logic here
+
+    const signUp = async () => {
+      try {
+        const response = await createUser({
+          username: formData.username,
+          email: formData.email,
+          password: formData.password,
+        });
+
+        if (response.success) {
+          console.log("Form Submitted", formData);
+          alert("Registration succesful");
+          //`Redirect to login page after successful registration`,
+          router.push("/login");
+        } else {
+          setErrors({ form: response.message });
+        }
+      } catch (error) {
+        setErrors({
+          form: "An error occurred during sign up. Please try again.",
+        });
+      }
+    };
+
+    signUp();
   };
 
   return (
@@ -90,7 +119,7 @@ export default function SignUp() {
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded"
             />
-            {errors.email&& (
+            {errors.email && (
               <p className="text-red-500 text-sm">{errors.email}</p>
             )}
           </div>

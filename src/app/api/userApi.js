@@ -4,16 +4,19 @@ dotenv.config();
 
 const Url = `${process.env.INVENT_NEXUS_API}/users`;
 
+const headers = {
+  headers: {
+    Accept: "application/json",
+    "Content-Type": "application/json;charset=UTF-8",
+  },
+  withCredentials: true,
+};
+
 export const createUser = async (username, email, password) => {
   const url = `${Url}`;
   const data = { username, email, password };
   try {
-    const response = await axios.post(url, data, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.post(url, data, headers);
 
     console.log("POST request successful. Response:", response.data);
     return response.data;
@@ -53,11 +56,7 @@ export const getUser = async (userId) => {
 export const getAllUsers = async () => {
   const url = `${Url}`;
   try {
-    const response = await axios.get(url, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
+    const response = await axios.get(url, headers);
 
     console.log("GET request successful. Response:", response.data);
     return response.data;
@@ -81,12 +80,7 @@ export const updateUser = async (
   const url = `${Url}/${userId}`;
   const updateData = { username, email, password, role, profilePicture };
   try {
-    const response = await axios.put(url, updateData, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
-      },
-    });
+    const response = await axios.put(url, updateData, headers);
 
     console.log("PUT request successful. Response:", response.data);
     return response.data;
@@ -106,11 +100,7 @@ export const deleteUser = async (userId) => {
   }
   const url = `${Url}/${userId}`;
   try {
-    const response = await axios.delete(url, {
-      headers: {
-        Accept: "application/json",
-      },
-    });
+    const response = await axios.delete(url, headers);
 
     console.log("DELETE request successful. Response:", response.data);
     return response.data;
@@ -122,3 +112,15 @@ export const deleteUser = async (userId) => {
     return { success: false, message: error.message };
   }
 };
+
+// import { NextResponse } from "next/server";
+
+// export async function POST(req: Request) {
+//   const { email, password } = await req.json();
+
+//   // Simulate successful registration
+//   if (email && password) {
+//     return NextResponse.json({ success: true });
+//   } else {
+//     return NextResponse.json({ error: "Invalid data" }, { status: 400 });
+//   }

@@ -1,5 +1,4 @@
 import axios from "axios";
-import Cookies from "js-cookie";
 
 export default async function loginUser(usernameOrEmail, password) {
   const url = `${process.env.INVENT_NEXUS_API}/auth/login`;
@@ -11,6 +10,7 @@ export default async function loginUser(usernameOrEmail, password) {
         Accept: "application/json",
         "Content-Type": "application/json;charset=UTF-8",
       },
+      withCredentials: true, // Ensures cookies are sent and received
     });
 
     if (response.status !== 200) {
@@ -20,32 +20,24 @@ export default async function loginUser(usernameOrEmail, password) {
       };
     }
 
-    const token = response.data?.token;
-
-    if (token) {
-      // Save token as a cookie
-      Cookies.set("authToken", token, { expires: 7 });
-
-      // Set token to header for all requests
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-
-      return {
-        success: true,
-        message: "Logged in successfully",
-        token,
-      };
-    } else {
-      return {
-        success: false,
-        message: "Token missing in response",
-      };
-    }
+    return {
+      success: true,
+      message: "Logged in successfully",
+    };
   } catch (error) {
-    console.error("Error in login:", error.response?.data || error.message);
+    console.error("Login Error:", error.response?.data || error.message);
     return {
       success: false,
-      message: error.response?.data?.message || error.message,
+      message: error.response?.data?.message || "An unexpected error occurred.",
     };
   }
-};
+}
+
   
+
+// import Cookies from "js-cookie";
+
+// const userData = Cookies.get("userData"); // Read user data
+// const parsedUser = userData ? JSON.parse(userData) : null;
+
+// console.log("User:", parsedUser); 
