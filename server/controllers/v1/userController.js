@@ -153,7 +153,6 @@ const updateUserHandler = async (req, res) => {
     let { username, email, password, role, profilePicture } = req.body;
 
     // Validate input fields
-    // Validate input fields
     const validateStringField = (field, fieldName) => {
       if (field && typeof field !== "string") {
         return res

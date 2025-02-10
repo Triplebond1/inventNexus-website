@@ -2,7 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { loginUser } from "../api/userApi"; // Ensure this is an async function
+import loginUser  from "../api/auth/login"; // Ensure this is an async function
 
 export default function LogIn() {
   const [formData, setFormData] = useState({
@@ -58,7 +58,9 @@ export default function LogIn() {
         setErrors({ form: response.message });
       } else {
         alert("Logged in successfully!");
+        //window.location.href = "/dashboard";
         router.push("/dashboard");
+        
       }
     } catch (error) {
       setErrors({ form: "An unexpected error occurred. Please try again." });

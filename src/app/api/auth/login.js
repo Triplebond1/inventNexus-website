@@ -1,9 +1,11 @@
 import axios from "axios";
+import "dotenv/config"; 
 
 export default async function loginUser(usernameOrEmail, password) {
-  const url = `${process.env.INVENT_NEXUS_API}/auth/login`;
-  const data = { usernameOrEmail, password };
 
+  const url = `${process.env.NEXT_PUBLIC_INVENT_NEXUS_API}/auth/login`;
+  const data = { usernameOrEmail, password };
+  
   try {
     const response = await axios.post(url, data, {
       headers: {
