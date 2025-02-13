@@ -4,7 +4,7 @@ import { FaceBookIcon, InstagramIcon, XIcon, LinkedinIcon } from "./svg/icons";
 
 export default function Footer() {
   return (
-    <footer className="w-full flex flex-col items-center justify-center border-t-2 border-gray-200 mt-5 bg-gray-50 pt-4 pb-4">
+    <footer className="w-full flex flex-col items-center bg-gray-100 justify-center border-t-2 border-blaze-orange-400 mt-5 bg-gray-50 pt-4 pb-4">
       {/* Social Media Section */}
       <div className="mb-4 text-center">
         <p className="font-bold text-blaze-orange-600">
@@ -19,14 +19,13 @@ export default function Footer() {
       </div>
 
       {/* Logo Section */}
-      <div className="w-full mb-4">
+      <div className="mb-4">
         <Image
-          src="/invent-logo-1.jpg"
-          layout="responsive"
-          width={32}
-          height={32}
+          src="/jpgImages/invent-logo-1.jpg"
+          width={400}
+          height={50}
           alt="InventNexus logo"
-          className="object-cover"
+          className=" object-cover object-center max-h-96"
         />
       </div>
 

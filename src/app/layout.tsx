@@ -16,6 +16,11 @@ const geistMono = localFont({
 export const metadata = {
   title: "inventnexus",
   description: "inventnexus website",
+  icons: {
+    icon: "/inventnexus.ico", // Default icon
+    shortcut: "/inventnexus.ico",
+    apple: "/pngImages/inventnexus-1.png", // Apple touch icon
+  },
 };
 
 export default function RootLayout({
@@ -27,7 +32,7 @@ export default function RootLayout({
     <html lang="en">
       
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
        
        <main>{children}</main>

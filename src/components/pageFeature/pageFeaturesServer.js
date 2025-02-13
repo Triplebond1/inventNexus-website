@@ -17,7 +17,7 @@ export const SocialMediaLink = ({ Name, Icon, Href }) => {
     <div className="container h-12 flex items-center m-auto border-solid border-b-white border-b-2 ">
       <Link
         href={Href}
-        className="text-black dark:text-white hover:underline hover:text-blaze-orange-600 on-active:text-blaze-orange-600 font-semibold flex justify-items-center my-auto items-center gap-2"
+        className="text-black hover:underline hover:text-blaze-orange-600 on-active:text-blaze-orange-600 font-semibold flex justify-items-center my-auto items-center gap-2"
       >
         {Name}
         <Icon />
@@ -30,7 +30,7 @@ export const CustomLink = ({ Href, Text }) => {
   return (
     <Link
       href={Href}
-      className="text-black dark:text-white hover:underline hover:text-blaze-orange-600  active:text-blaze-orange-600"
+      className="text-black hover:underline hover:text-blaze-orange-600  active:text-blaze-orange-600"
     >
       {Text}
     </Link>

@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { parse } from "cookie";
+import { cookies } from 'next/headers'
 
 export function middleware(req: NextRequest) {
   // Parse cookies from the request header
+  // const cookieStore = await cookies()
+  // const theme = cookieStore.get('theme')
   const cookieHeader = req.headers.get("cookie") || "";
   const cookies = parse(cookieHeader);
   

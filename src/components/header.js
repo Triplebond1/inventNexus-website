@@ -1,6 +1,7 @@
 "use client";
 import { CustomLink } from "./pageFeature/pageFeaturesServer";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -68,13 +69,21 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
         {/* Logo */}
-        <div className="text-2xl font-bold text-blaze-orange-500">
-          InventNexus
+        {/* Logo */}
+        <div className="flex items-center gap-2 text-2xl font-bold text-blaze-orange-950">
+          <Image
+            src="/pngIcons/inventnexus-2.png"
+            width={40}
+            height={40} // Adjust height to maintain aspect ratio
+            alt="InventNexus logo"
+            className="object-contain max-h-10 rounded-sm"
+          />
+          <span>InventNexus</span>
         </div>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-6 font-semibold">
-          <ul className="flex space-x-6 ">
+          <ul className="flex space-x-4 ">
             {homeMenu.map((item, index) => (
               <li key={index}>
                 <CustomLink Href={item.Href} Text={item.Text} />
