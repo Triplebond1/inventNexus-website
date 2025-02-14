@@ -38,75 +38,77 @@ const Quote = [
 
 export default function Body() {
   return (
-    <div className="dark:bg-gray-900 max-w-screen bg-white sm:w-3/4 lg:w-4/6 mx-auto ">
-
+    <div className="column dark:bg-white max-w-screen bg-white sm:w-3/4 lg:w-4/6 mx-auto ">
       {/* Leonardo Da Vinci Image & Caption */}
-      <ImageSection
-        src="/pngImages/knowing-is-not-enough-2.png"
-        alt="Leonardo Da Vinci"
-        
-      />
-
-      {/* About InventNexus */}
-      <section className="pb-20" id="about-us">
-        <h2 className="h-10 pb-10 text-center text-blaze-orange-600 font-bold text-3xl tracking-wider">
-          INVENTNEXUS INC
-           {/* Propelling Message */}
-          <span className="flex items-center justify-center text-blaze-orange-900 font-normal text-sm tracking-wider">
-        propelling invention and innovation
-      </span>
-        </h2>
-
-        <InventNexusIntro />
+      <section className="w-full px-10">
+        <ImageSection
+          src="/pngImages/knowing-is-not-enough-2.png"
+          alt="Leonardo Da Vinci"
+        />
       </section>
 
+      {/* About InventNexus */}
+      <section className="pb-20 px-10" id="about-us">
+        <h2 className="h-10 pb-10 text-center text-blaze-orange-600 font-bold text-3xl tracking-wider">
+          INVENTNEXUS INC
+          {/* Propelling Message */}
+          <span className="flex items-center justify-center text-blaze-orange-900 font-normal text-sm tracking-wider">
+            propelling invention and innovation
+          </span>
+        </h2>
+        <p className=" py-5 text-justify text-black font-normal text-sm tracking-normal">
+          <InventNexusIntro />
+        </p>
+      </section>
 
       {/* quote section */}
       <section className="w-full mb-5 pb-10 flex justify-center items-center">
         <Carousel listText={Quote} />
       </section>
-
+      
       <div className="h-20"></div>
       {/* Inventpedia Section */}
-      <ImageTextSection
-        id="invent-pedia"
-        title="INVENTPEDIA"
-        src="/pngImages/A-live-breathing-archive-of-human-inventiveness-Inventpedia-is-more-than-just-an-encyclopedia.png"
-        alt="InventNexus Inventpedia"
-        subtitle="The Encyclopedia of Invention and Innovation"
-      >
-        <p className="text-lg  text-gray-700 mb-6 font-normal">
-          A live, breathing archive of human inventiveness, Inventpedia is more
-          than just an encyclopedia. Picture an environment where the next
-          generation of innovators is motivated to push the envelope of what is
-          possible, where you may not only learn from the experiences of those
-          who have changed our world, but also have your own innovative ideas
-          acknowledged and magnified. By advancing you into the future,
-          Inventpedia aims to do more than merely pay tribute to history. In
-          this environment, you can express your creativity freely, connect with
-          groundbreaking opportunities, and let your ideas take off.
-        </p>
-        <p className="mt-4 text-gray-700 text-lg mb-6">
-          Are you prepared to go farther?{" "}
-          <Link href="/coffee" className="hover:text-blaze-orange-500">
-            Discover how Inventpedia may enhance your trip at InventNexus,
-          </Link>{" "}
-          and become a part of a community that is revolutionizing the realm of
-          possibilities.
-        </p>
-
-      </ImageTextSection>
+      <section className="px-10">
+        <ImageTextSection
+          id="invent-pedia"
+          title="INVENTPEDIA"
+          src="/pngImages/A-live-breathing-archive-of-human-inventiveness-Inventpedia-is-more-than-just-an-encyclopedia.png"
+          alt="InventNexus Inventpedia"
+          subtitle="The Encyclopedia of Invention and Innovation"
+        >
+          <p className="text-lg  text-gray-700 mb-6 font-normal">
+            A live, breathing archive of human inventiveness, Inventpedia is
+            more than just an encyclopedia. Picture an environment where the
+            next generation of innovators is motivated to push the envelope of
+            what is possible, where you may not only learn from the experiences
+            of those who have changed our world, but also have your own
+            innovative ideas acknowledged and magnified. By advancing you into
+            the future, Inventpedia aims to do more than merely pay tribute to
+            history. In this environment, you can express your creativity
+            freely, connect with groundbreaking opportunities, and let your
+            ideas take off.
+          </p>
+          <p className="mt-4 text-gray-700 text-lg mb-6">
+            Are you prepared to go farther?{" "}
+            <Link href="/coffee" className="hover:text-blaze-orange-500">
+              Discover how Inventpedia may enhance your trip at InventNexus,
+            </Link>{" "}
+            and become a part of a community that is revolutionizing the realm
+            of possibilities.
+          </p>
+        </ImageTextSection>
+      </section>
 
       {/* InventNexus Mission Statement Section */}
-      {/* InventNexus Mission Statement */}
-      <ImageTextSection
-        id="mission-statement"
-        title="INVENTNEXUS MISSION STATEMENT"
-        src="/pngImages/inventnexus-front-page.png"
-        alt="InventNexus Mission"
-        subtitle="The mission of InventNexus is based on these six pillars"
-      />
-
+      <section className="px-10">
+        <ImageTextSection
+          id="mission-statement"
+          title="INVENTNEXUS MISSION STATEMENT"
+          src="/pngImages/inventnexus-front-page.png"
+          alt="InventNexus Mission"
+          subtitle="The mission of InventNexus is based on these six pillars"
+        />
+      </section>
       {/* Mission Statements */}
       <section className=" space-y-20 px-10 pb-20">
         {[
@@ -152,7 +154,7 @@ export default function Body() {
         ].map((item, index) => (
           <div
             key={index}
-            className="px-10 py-10 text-justify text-white bg-blaze-orange-400 font-normal text-sm tracking-normal"
+            className="px-10 mx-10 py-10 text-justify text-white bg-blaze-orange-400 font-normal text-sm tracking-normal"
           >
             <p className="text-center py-2 font-bold mb-2 text-xl text-blaze-orange-950">
               {item.title}
@@ -163,7 +165,7 @@ export default function Body() {
       </section>
 
       {/* Closing Message */}
-      <section className="h-20 hover:animate-[bounce_1s_ease-in-out_5] duration-200 flex items-center justify-centerpx-10 bg-transparent">
+      <section className="h-20 hover:animate-[bounce_1s_ease-in-out_5] duration-200 flex items-center justify-center px-10 bg-transparent">
         <p className="py-2 px-5 text-blaze-orange-600 font-bold text-lg tracking-normal text-center">
           Explore, Connect, and Be Inspired To Create The Future You Have Always
           Dreamed With InventNexus.
@@ -179,7 +181,7 @@ const Section = ({ title, children, className = "", id }) => (
         {title}
       </h2>
     )}
-    <div className="px-10 py-5 text-justify text-black dark:text-white">
+    <div className="px-10 py-5 text-justify text-black font-normal text-lg tracking-normal">
       {children}
     </div>
   </section>
@@ -214,7 +216,7 @@ const ImageTextSection = ({ id, title, src, alt, subtitle, children }) => (
         {subtitle}
       </p>
     )}
-    <div className="max-w-4xl text-justify mx-auto py-10  text-black font-normal text-lg tracking-normal">
+    <div className="max-w-5/6 text-justify mx-auto py-10  text-black font-normal text-lg tracking-normal">
       {children}
     </div>
   </Section>
@@ -222,13 +224,12 @@ const ImageTextSection = ({ id, title, src, alt, subtitle, children }) => (
 
 const InventNexusIntro = () => {
   return (
-    <div className="max-w-4xl text-justify mx-auto px-10 py-10  text-black font-normal text-lg tracking-normal">
-
+    <div className="max-w-5/6 text-justify mx-auto px-10 py-10  text-black font-normal text-lg tracking-normal">
       <p className="text-lg text-gray-700 mb-6">
         Welcome to{" "}
-        <span className="font-semibold text-blaze-orange-500">InventNexus</span>, the
-        epicenter of groundbreaking ideas, limitless creativity, and real-world
-        impact. Here, we don’t just talk about innovation—we{" "}
+        <span className="font-semibold text-blaze-orange-500">InventNexus</span>
+        , the epicenter of groundbreaking ideas, limitless creativity, and
+        real-world impact. Here, we don’t just talk about innovation—we{" "}
         <span className="font-semibold">
           ignite it, refine it, and bring it to life
         </span>
@@ -242,10 +243,10 @@ const InventNexusIntro = () => {
         Knowledge alone isn’t enough. The world doesn’t reward what you know—it
         rewards <span className="font-semibold">what you do with it</span>.
         That’s why{" "}
-        <span className="font-semibold text-blaze-orange-500">InventNexus</span> is
-        more than a platform; it’s a movement—a space where thinkers, creators,
-        and visionaries unite to solve challenges, push boundaries, and{" "}
-        <span className="font-semibold">turn bold ideas into reality</span>.
+        <span className="font-semibold text-blaze-orange-500">InventNexus</span>{" "}
+        is more than a platform; it’s a movement—a space where thinkers,
+        creators, and visionaries unite to solve challenges, push boundaries,
+        and <span className="font-semibold">turn bold ideas into reality</span>.
       </p>
 
       <h2 className="text-xl font-bold text-gray-800 mb-4">
@@ -256,8 +257,9 @@ const InventNexusIntro = () => {
         <span className="font-semibold">
           knowledge and action, theory and execution, dreamers and doers
         </span>
-        . At <span className="font-semibold text-blaze-orange-500">InventNexus</span>,
-        you’ll find a{" "}
+        . At{" "}
+        <span className="font-semibold text-blaze-orange-500">InventNexus</span>
+        , you’ll find a{" "}
         <span className="font-semibold">global community of innovators</span>,
         collaborating, refining, and launching the next wave of game-changing
         inventions. Whether you are an inventor, entrepreneur, researcher, or
@@ -299,8 +301,8 @@ const InventNexusIntro = () => {
       <p className="text-lg text-gray-700 mb-6">
         We don’t just celebrate past and present breakthroughs—we{" "}
         <span className="font-semibold">create the future</span>.{" "}
-        <span className="font-semibold text-blaze-orange-500">InventNexus</span> is
-        the launchpad where your ideas gain momentum and become reality.
+        <span className="font-semibold text-blaze-orange-500">InventNexus</span>{" "}
+        is the launchpad where your ideas gain momentum and become reality.
       </p>
 
       <p className="text-lg font-bold text-blaze-orange-600 mb-6">

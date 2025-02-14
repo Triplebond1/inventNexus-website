@@ -1,7 +1,7 @@
 
 export default function Body() {
   return (
-    <div className="column dark:bg-black bg-white sm:w-3/4 lg:w-4/6 mx-auto">
+    <div className="column dark:bg-white bg-white sm:w-3/4 lg:w-4/6 mx-auto">
       {/* propelling column /> */}
       <div className="py-6 h-20 inline-block align-middle  text-center text-black bg-transparent font-bold text-xl tracking-wider w-full">
         {"Privacy Policy"}
