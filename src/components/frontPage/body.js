@@ -38,25 +38,28 @@ const Quote = [
 
 export default function Body() {
   return (
-    <div className="dark:bg-white max-w-screen bg-white sm:w-3/4 lg:w-4/6 mx-auto ">
+    <div className="dark:bg-gray-900 max-w-screen bg-white sm:w-3/4 lg:w-4/6 mx-auto ">
+
       {/* Leonardo Da Vinci Image & Caption */}
       <ImageSection
         src="/pngImages/knowing-is-not-enough-2.png"
         alt="Leonardo Da Vinci"
+        
       />
 
       {/* About InventNexus */}
       <section className="pb-20" id="about-us">
         <h2 className="h-10 pb-10 text-center text-blaze-orange-600 font-bold text-3xl tracking-wider">
           INVENTNEXUS INC
-          {/* Propelling Message */}
+           {/* Propelling Message */}
           <span className="flex items-center justify-center text-blaze-orange-900 font-normal text-sm tracking-wider">
-            propelling invention and innovation
-          </span>
+        propelling invention and innovation
+      </span>
         </h2>
 
         <InventNexusIntro />
       </section>
+
 
       {/* quote section */}
       <section className="w-full mb-5 pb-10 flex justify-center items-center">
@@ -91,6 +94,7 @@ export default function Body() {
           and become a part of a community that is revolutionizing the realm of
           possibilities.
         </p>
+
       </ImageTextSection>
 
       {/* InventNexus Mission Statement Section */}
@@ -175,7 +179,7 @@ const Section = ({ title, children, className = "", id }) => (
         {title}
       </h2>
     )}
-    <div className="px-10 py-5 text-justify text-black ">
+    <div className="px-10 py-5 text-justify text-black dark:text-white">
       {children}
     </div>
   </section>
@@ -185,6 +189,7 @@ const ImageSection = ({ src, alt, caption }) => (
   <section className="w-full text-xs text-black text-center">
     <Image
       src={src}
+      layout="responsive"
       width={1600}
       height={200}
       alt={alt}
@@ -198,6 +203,7 @@ const ImageTextSection = ({ id, title, src, alt, subtitle, children }) => (
   <Section id={id} title={title}>
     <Image
       src={src}
+      layout="responsive"
       width={1600}
       height={200}
       alt={alt}
@@ -217,11 +223,12 @@ const ImageTextSection = ({ id, title, src, alt, subtitle, children }) => (
 const InventNexusIntro = () => {
   return (
     <div className="max-w-4xl text-justify mx-auto px-10 py-10  text-black font-normal text-lg tracking-normal">
+
       <p className="text-lg text-gray-700 mb-6">
         Welcome to{" "}
-        <span className="font-semibold text-blaze-orange-500">InventNexus</span>
-        , the epicenter of groundbreaking ideas, limitless creativity, and
-        real-world impact. Here, we don’t just talk about innovation—we{" "}
+        <span className="font-semibold text-blaze-orange-500">InventNexus</span>, the
+        epicenter of groundbreaking ideas, limitless creativity, and real-world
+        impact. Here, we don’t just talk about innovation—we{" "}
         <span className="font-semibold">
           ignite it, refine it, and bring it to life
         </span>
@@ -235,10 +242,10 @@ const InventNexusIntro = () => {
         Knowledge alone isn’t enough. The world doesn’t reward what you know—it
         rewards <span className="font-semibold">what you do with it</span>.
         That’s why{" "}
-        <span className="font-semibold text-blaze-orange-500">InventNexus</span>{" "}
-        is more than a platform; it’s a movement—a space where thinkers,
-        creators, and visionaries unite to solve challenges, push boundaries,
-        and <span className="font-semibold">turn bold ideas into reality</span>.
+        <span className="font-semibold text-blaze-orange-500">InventNexus</span> is
+        more than a platform; it’s a movement—a space where thinkers, creators,
+        and visionaries unite to solve challenges, push boundaries, and{" "}
+        <span className="font-semibold">turn bold ideas into reality</span>.
       </p>
 
       <h2 className="text-xl font-bold text-gray-800 mb-4">
@@ -249,9 +256,8 @@ const InventNexusIntro = () => {
         <span className="font-semibold">
           knowledge and action, theory and execution, dreamers and doers
         </span>
-        . At{" "}
-        <span className="font-semibold text-blaze-orange-500">InventNexus</span>
-        , you’ll find a{" "}
+        . At <span className="font-semibold text-blaze-orange-500">InventNexus</span>,
+        you’ll find a{" "}
         <span className="font-semibold">global community of innovators</span>,
         collaborating, refining, and launching the next wave of game-changing
         inventions. Whether you are an inventor, entrepreneur, researcher, or
@@ -293,8 +299,8 @@ const InventNexusIntro = () => {
       <p className="text-lg text-gray-700 mb-6">
         We don’t just celebrate past and present breakthroughs—we{" "}
         <span className="font-semibold">create the future</span>.{" "}
-        <span className="font-semibold text-blaze-orange-500">InventNexus</span>{" "}
-        is the launchpad where your ideas gain momentum and become reality.
+        <span className="font-semibold text-blaze-orange-500">InventNexus</span> is
+        the launchpad where your ideas gain momentum and become reality.
       </p>
 
       <p className="text-lg font-bold text-blaze-orange-600 mb-6">
