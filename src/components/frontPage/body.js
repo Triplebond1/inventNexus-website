@@ -38,9 +38,9 @@ const Quote = [
 
 export default function Body() {
   return (
-    <div className="column dark:bg-white max-w-screen bg-white sm:w-3/4 lg:w-4/6 mx-auto ">
+    <div className="column w-screen dark:bg-white max-w-screen bg-white sm:w-3/4 lg:w-4/6 mx-auto">
       {/* Leonardo Da Vinci Image & Caption */}
-      <section className="w-full px-10">
+      <section className="w-full">
         <ImageSection
           src="/pngImages/knowing-is-not-enough-2.png"
           alt="Leonardo Da Vinci"
@@ -48,7 +48,7 @@ export default function Body() {
       </section>
 
       {/* About InventNexus */}
-      <section className="pb-20 px-10" id="about-us">
+      <section className="pb-20" id="about-us">
         <h2 className="h-10 pb-10 text-center text-blaze-orange-600 font-bold text-3xl tracking-wider">
           INVENTNEXUS INC
           {/* Propelling Message */}
@@ -56,19 +56,18 @@ export default function Body() {
             propelling invention and innovation
           </span>
         </h2>
-        <p className=" py-5 text-justify text-black font-normal text-sm tracking-normal">
           <InventNexusIntro />
-        </p>
+        
       </section>
 
       {/* quote section */}
-      <section className="w-full mb-5 pb-10 flex justify-center items-center">
+      <section className="flex mx-auto mb-5 pb-10 justify-center items-center ">
         <Carousel listText={Quote} />
       </section>
       
       <div className="h-20"></div>
       {/* Inventpedia Section */}
-      <section className="px-10">
+      <section >
         <ImageTextSection
           id="invent-pedia"
           title="INVENTPEDIA"
@@ -100,17 +99,17 @@ export default function Body() {
       </section>
 
       {/* InventNexus Mission Statement Section */}
-      <section className="px-10">
+      <section>
         <ImageTextSection
           id="mission-statement"
-          title="INVENTNEXUS MISSION STATEMENT"
+          title="MISSION STATEMENT"
           src="/pngImages/inventnexus-front-page.png"
           alt="InventNexus Mission"
           subtitle="The mission of InventNexus is based on these six pillars"
         />
       </section>
       {/* Mission Statements */}
-      <section className=" space-y-20 px-10 pb-20">
+      <section className=" space-y-20 pb-20">
         {[
           {
             title: "IGNITE CREATIVE GENIUS",
@@ -154,18 +153,18 @@ export default function Body() {
         ].map((item, index) => (
           <div
             key={index}
-            className="px-10 mx-10 py-10 text-justify text-white bg-blaze-orange-400 font-normal text-sm tracking-normal"
+            className="px-5 mx-10 py-10 text-justify text-wrap text-blaze-orange-950 bg-blaze-orange-50 rounded-3xl border-2 border-blaze-orange-600 font-normal text-sm tracking-normal"
           >
-            <p className="text-center py-2 font-bold mb-2 text-xl text-blaze-orange-950">
+            <p className="text-center py-2 font-bold mb-2 text-xl text-blaze-orange-600">
               {item.title}
             </p>
-            <p className="text-lg">{item.text}</p>
+            <p className="text-lg font-medium">{item.text}</p>
           </div>
         ))}
       </section>
 
       {/* Closing Message */}
-      <section className="h-20 hover:animate-[bounce_1s_ease-in-out_5] duration-200 flex items-center justify-center px-10 bg-transparent">
+      <section className="h-20 hover:animate-[bounce_1s_ease-in-out_5] duration-200 flex items-center justify-center pb-20 bg-transparent">
         <p className="py-2 px-5 text-blaze-orange-600 font-bold text-lg tracking-normal text-center">
           Explore, Connect, and Be Inspired To Create The Future You Have Always
           Dreamed With InventNexus.
@@ -270,6 +269,7 @@ const InventNexusIntro = () => {
       <h2 className="text-xl font-bold text-gray-800 mb-4">
         A Hub for Visionaries, Innovators & Change-Makers
       </h2>
+
       <ul className="text-lg text-gray-700 list-disc list-inside mb-6">
         <li>
           <span className="font-semibold">Document your ideas</span> and

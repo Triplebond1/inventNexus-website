@@ -1,8 +1,10 @@
-
-
 import { useState, useEffect } from "react";
 
-export const Carousel = ({ listText, autoSlide = true, autoSlideInterval = 6000 }) => {
+export const Carousel = ({
+  listText,
+  autoSlide = true,
+  autoSlideInterval = 6000,
+}) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalSlides = listText.length;
 
@@ -27,14 +29,20 @@ export const Carousel = ({ listText, autoSlide = true, autoSlideInterval = 6000 
   };
 
   return (
-    <div className="relative flex flex-col w-4/6 justify-center  max-w-5/6 mx-auto overflow-hidden">
+    <div className="relative flex flex-col max-w-lg w-4/6  justify-center mx-auto overflow-hidden">
       {/* Slides */}
-      <div className="flex transition-transform duration-500 ease-in-out"
+      <div
+        className="flex transition-transform duration-500 ease-in-out"
         style={{ transform: `translateX(-${currentIndex * 100}%)` }}
       >
         {listText.map((text, index) => (
-          <div key={index} className="w-full min-w-full h-auto flex flex-col justify-center items-center bg-blaze-orange-50  rounded-3xl border-blaze-orange-300 border-2 text-center p-4">
-            <p className="text-lg font-medium text-blaze-orange-950">{text.quote}</p>
+          <div
+            key={index}
+            className="w-full min-w-full h-auto flex flex-col justify-center items-center bg-blaze-orange-50  rounded-3xl border-blaze-orange-600 border-2 text-center p-4"
+          >
+            <p className="text-lg font-medium text-blaze-orange-950">
+              {text.quote}
+            </p>
             <p className="text-sm text-blaze-orange-600"> ~~ {text.author}</p>
           </div>
         ))}
@@ -61,7 +69,9 @@ export const Carousel = ({ listText, autoSlide = true, autoSlideInterval = 6000 
             key={index}
             onClick={() => setCurrentIndex(index)}
             className={`w-3 h-3 rounded-full transition ${
-              currentIndex === index ? "bg-blaze-orange-500 scale-125" : "bg-gray-400 scale-75"
+              currentIndex === index
+                ? "bg-blaze-orange-500 scale-125"
+                : "bg-gray-400 scale-75"
             }`}
           />
         ))}
@@ -69,4 +79,3 @@ export const Carousel = ({ listText, autoSlide = true, autoSlideInterval = 6000 
     </div>
   );
 };
-
