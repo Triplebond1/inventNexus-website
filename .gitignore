@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+/data
 /node_modules
 /.pnp
 .pnp.*
@@ -41,7 +42,5 @@ next-env.d.ts
 
 
 
-echo "server/utilities/firebase/firebaseServiceAccount.json" >> .gitignore
-git add .gitignore
-git commit -m "Add firebaseServiceAccount.json to .gitignore"
+
 server/utilities/firebase/firebaseServiceAccount.json

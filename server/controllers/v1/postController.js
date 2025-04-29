@@ -2,6 +2,7 @@ const Post = require("../../models/post");
 const Category = require("../../models/category");
 const Tag = require("../../models/tag");
 const populateSchemaMarkup = require("../../utilities/helpers/schemaMarkUp");
+const { validateRequiredField, validateField } = require("../../utilities/helpers/validateField");
 
 // @desc    Create a new post
 // @route   POST /v1/api/post
@@ -13,7 +14,6 @@ const createPostHandler = async (req, res) => {
       content,
       keyTakeAway,
       summary,
-      slug,
       postContributor,
       metaDescription,
       parentPage,
@@ -38,12 +38,25 @@ const createPostHandler = async (req, res) => {
     }
 
     // Validate required fields
-    if (!title || !content) {
-      return res
-        .status(400)
-        .json({ message: "Title and content, are required." });
-    }
-    
+    validateRequiredField(title, "Title", "string");
+    validateRequiredField(content, "Content", "string");
+
+    //validate non required field data type
+    validateField(keyTakeAway, "Key take away", "string");
+    validateField(summary, "summary", "string");
+    validateField(postContributor, "Post contributor", "string");
+    validateField(metaDescription, "Meta description", "string");
+    validateField(parentPost, "parent Post", "string");
+    validateField(focuskeywords, "focus keywords", "string");
+    validateField(categories, "categories", "string");
+    validateField(tags, "tag", "string");
+    validateField(featuredImage, "featured image", "string");
+    validateField(coverImage, "cover image", "string");
+    validateField(featuredVideo, "featured video", "string");
+    validateField(status, "status", "string");
+    validateField(nextPage, "next page", "string");
+    validateField(previousPage, "previous page", "string");
+
     title = title.toLowerCase();
     content = content.toLowerCase();
 
@@ -211,7 +224,7 @@ const getAllPostsHandler = async (req, res) => {
 
     // Fetch posts with the applied filters
     const posts = await Post.find(query)
-      .populate("author", "name",)
+      .populate("author", "name")
       .populate("categories", "name")
       .populate("tags", "name");
 
@@ -239,6 +252,8 @@ const updatePostStatusHandler = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "User is not authenticated" });
     }
+
+    validateField(postId, "post ID", "string")
     // Check if the status is valid
     if (
       ![
@@ -327,11 +342,28 @@ const updatePostHandler = async (req, res) => {
       breadcrumbList,
     } = req.body;
 
-
     if (!user) {
       return res.status(401).json({ message: "User is not authenticated" });
     }
 
+    //validate field data type
+    validateField(title, "Title", "string");
+    validateField(content, "Content", "string");
+    validateField(keyTakeAway, "Key take away", "string");
+    validateField(summary, "summary", "string");
+    validateField(slug, "slug", "string");
+    validateField(postContributor, "Post contributor", "string");
+    validateField(metaDescription, "Meta description", "string");
+    validateField(parentPost, "parent Post", "string");
+    validateField(focuskeywords, "focus keywords", "string");
+    validateField(categories, "categories", "string");
+    validateField(tags, "tag", "string");
+    validateField(featuredImage, "featured image", "string");
+    validateField(coverImage, "cover image", "string");
+    validateField(featuredVideo, "featured video", "string");
+    validateField(status, "status", "string");
+    validateField(nextPage, "next page", "string");
+    validateField(previousPage, "previous page", "string");
     // Check if the status is valid
     if (
       status &&

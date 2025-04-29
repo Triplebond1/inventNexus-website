@@ -303,3 +303,109 @@ export default PrivateRoute;
 //   );
 // };
 
+
+
+
+
+
+// import { useRouter } from 'next/router';
+// import axios from 'axios';
+// import Head from 'next/head';
+// import { useState, useEffect } from 'react';
+
+// export default function PostPage({ post }) {
+//   const router = useRouter();
+//   const [comments, setComments] = useState([]); // For client-side interactivity
+
+//   // Client-side data fetching (CSR) for dynamic content like comments
+//   useEffect(() => {
+//     if (post?.slug) {
+//       // Simulate fetching comments (replace with real API call)
+//       axios
+//         .get(`http://localhost:3000/comments/${post.slug}`)
+//         .then((res) => setComments(res.data))
+//         .catch((err) => console.error('Error fetching comments:', err));
+//     }
+//   }, [post?.slug]);
+
+//   // Handle fallback (when page is not pre-rendered)
+//   if (router.isFallback) {
+//     return <div className="text-center py-10">Loading...</div>;
+//   }
+
+//   // Handle post not found
+//   if (!post) {
+//     return <div className="text-center py-10">Post not found</div>;
+//   }
+
+//   return (
+//     <div className="max-w-3xl mx-auto py-10 px-4">
+//       <Head>
+//         <title>{post.title}</title>
+//         <meta name="description" content={`Read ${post.title}`} />
+//       </Head>
+//       <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
+//       <div
+//         className="prose mb-6"
+//         dangerouslySetInnerHTML={{ __html: post.content }}
+//       />
+//       <p className="text-gray-500">
+//         Published on: {new Date(post.createdAt).toDateString()}
+//       </p>
+
+//       {/* Client-side interactive section */}
+//       <div className="mt-8">
+//         <h2 className="text-2xl font-semibold mb-4">Comments</h2>
+//         {comments.length > 0 ? (
+//           <ul>
+//             {comments.map((comment, index) => (
+//               <li key={index} className="mb-2">
+//                 {comment.text}
+//               </li>
+//             ))}
+//           </ul>
+//         ) : (
+//           <p>No comments yet.</p>
+//         )}
+//       </div>
+//     </div>
+//   );
+// }
+
+// // Static Site Generation (SSG) with Incremental Static Regeneration (ISR)
+// export async function getStaticPaths() {
+//   // Fetch a list of slugs to pre-render (e.g., popular posts)
+//   // Replace with real API call to your NestJS backend
+//   const slugs = ['sample-post', 'another-post']; // Example slugs
+
+//   const paths = slugs.map((slug) => ({
+//     params: { slug },
+//   }));
+
+//   return {
+//     paths,
+//     fallback: 'blocking', // Use SSR for non-pre-rendered slugs
+//   };
+// }
+
+// // Fetch data for each page (SSG or SSR)
+// export async function getStaticProps({ params }) {
+//   try {
+//     const { slug } = params;
+//     const res = await axios.get(`http://localhost:3000/post/${slug}`);
+//     const post = res.data;
+
+//     return {
+//       props: {
+//         post,
+//       },
+//       revalidate: 60, // Revalidate every 60 seconds (ISR)
+//     };
+//   } catch (error) {
+//     return {
+//       props: {
+//         post: null,
+//       },
+//     };
+//   }
+// }

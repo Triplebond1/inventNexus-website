@@ -1,4 +1,5 @@
 const Tag = require("../../models/tag");
+const { validateRequiredField } = require("../../utilities/helpers/validateField");
 
 
 // @desc    Create a new Tag
@@ -12,9 +13,8 @@ const createTagHandler = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "User is not authenticated" });
     }
-    if (!name) {
-      return res.status(400).json({ message: "Tag name is required" });
-    }
+    //validate required field
+    validateRequiredField(name, "Tag Name", "string")
 
     // Authorization check: only admin, and editor can create a tag
     if (user.role !== "admin" && user.role !== "editor") {
@@ -78,10 +78,9 @@ const updateTagHandler = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "User is not authenticated" });
     }
-
-    if (!name) {
-      return res.status(400).json({ message: "Tag name is required" });
-    }
+    
+    //validate required field with datatype
+    validateRequiredField(name, "Tag Name", "string")
 
     // Authorization check: only admin, and editor can update a tag
     if (user.role !== "admin" && user.role !== "editor") {

@@ -52,3 +52,45 @@ export const Accordion = ({ title, children }) => {
     </div>
   );
 };
+
+export const PostDropDown = ({post}) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div >
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="h-12 w-full p-2  bg-blaze-orange-100 rounded-lg justify-center flex flex-wrap text-start items-center"
+      >
+        
+        {/* post name */}
+        <div className="flex-shrink-0 w-2/6 sm:w-2/6 h-6 overflow-hidden whitespace-nowrap text-ellipsis px-2">
+          <h3 className="text-sm font-normal text-center">{post.postName}</h3>
+        </div>
+        {/* post status */}
+        <div className="flex-shrink-0 w-2/6 sm:w-2/6 h-6 overflow-hidden whitespace-nowrap text-ellipsis px-2">
+          <h3 className="text-sm font-normal text-center">{post.status}</h3>
+        </div>
+        {/* post date published */}
+        <div className="flex-shrink-0 w-2/6 sm:w-2/6 h-6 overflow-hidden whitespace-nowrap text-ellipsis px-2">
+          <h3 className="text-sm font-normal text-center">
+            {post.datePublished}
+          </h3>
+          </div>
+          </button>
+      
+      {isOpen && (
+        <div className="p-4 text-sm text-gray-600">
+          {/* post SEO rating */}
+          <div className="flex-shrink-0 w-1/6 sm:w-1/6 h-6 overflow-hidden whitespace-nowrap text-ellipsis px-2">
+            <h3 className="text-sm font-normal text-center">SEO Rating</h3>
+          </div>
+          {/* post traffic */}
+          <div className="flex-shrink-0 w-1/6 sm:w-1/6 h-6 overflow-hidden whitespace-nowrap text-ellipsis px-2">
+            <h3 className="text-sm font-normal text-center">Traffic</h3>
+          </div>{" "}
+        </div>
+      )}
+    </div>
+  );
+};

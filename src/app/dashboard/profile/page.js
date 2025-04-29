@@ -1,109 +1,112 @@
-import { PageName} from "../../../components/pageFeature/pageFeaturesServer";
-import { SocialMediaLink } from "../../../components/pageFeature/pageFeaturesServer";
-import { FaceBookIcon, WhatsappIcon, LinkedinIcon, InstagramIcon, XIcon} from "../../../components/svg/icons";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {
+  PageName,
+  SocialMediaLink,
+} from "../../../components/pageFeature/pageFeaturesServer";
+import {
+  FaceBookIcon,
+  WhatsappIcon,
+  LinkedinIcon,
+  InstagramIcon,
+  XIcon,
+} from "../../../components/svg/icons";
 
-export default function profilePage() {
+const socialMediaLinks = [
+  { Icon: FaceBookIcon, name: "FACEBOOK", href: "" },
+  { Icon: WhatsappIcon, name: "WHATSAPP", href: "" },
+  { Icon: LinkedinIcon, name: "LINKEDIN", href: "" },
+  { Icon: InstagramIcon, name: "INSTAGRAM", href: "" },
+  { Icon: XIcon, name: "X", href: "" },
+];
+
+const profileTabs = [
+  { tabName: "USERNAME", text: "Your username here" },
+  { tabName: "EMAIL", text: "Your email here" },
+  { tabName: "ROLE", text: "Your role here" },
+  { tabName: "WEBSITE", text: "Your website", href: "" },
+  { tabName: "INVENTNEXUS PAGE", text: "Your InventNexus page", href: "" },
+  { tabName: "LOCATION", text: "Your location here" },
+  {
+    tabName: "BIO",
+    text: "Your bio here. Add details about your interests, skills, and achievements.",
+  },
+];
+
+const Tab = ({ tabName, text }) => (
+  <div className="bg-white rounded-2xl p-4 mb-4 shadow-sm transition-all hover:shadow-md">
+    <h2 className="text-lg font-semibold text-gray-900 border-b-2 border-gray-200 pb-2">
+      {tabName}
+    </h2>
+    <p className="mt-2 text-gray-700 break-words">{text}</p>
+  </div>
+);
+
+const TabLink = ({ tabName, text, hRef }) => (
+  <div className="bg-white rounded-2xl p-4 mb-4 shadow-sm transition-all hover:shadow-md">
+    <h2 className="text-lg font-semibold text-gray-900 border-b-2 border-gray-200 pb-2">
+      {tabName}
+    </h2>
+    <Link
+      href={hRef}
+      className="mt-2 text-blaze-orange-700 hover:text-blaze-orange-800 transition-colors"
+    >
+      {text}
+    </Link>
+  </div>
+);
+
+const ProfilePage = () => {
   return (
-    <div className="column items-center justify-center ">
-      {/* page name */}
-      <div>
-        <PageName pageName="PROFILE" />
-      </div>
-      <p className="mt-2">This is your profile page.</p>
-      <div className="flex-column h-auto sm:w-2/4 max-w-sm justify-center mx-auto">
-        <div className="flex bg-blaze-orange-100 h-48 w-48 rounded-full  relative items-center  justify-center mx-auto my-2">
+    <div className="flex flex-col items-center min-h-screen bg-gradient-to-b from-gray-50 to-white py-8">
+      <PageName pageName="PROFILE" /> 
+      <p className="mt-4 text-gray-600 text-lg">Welcome to your profile</p>
+      <div className="w-full max-w-md sm:max-w-lg mt-6 px-4">
+        <div className="relative w-48 h-48 mx-auto mb-6 border-4 border-blaze-orange-500 rounded-full overflow-hidden">
           <Image
             src="/leonardo-da-vinci-quote-2.png"
-            layout="responsive"
-            width={48}
-            height={48}
-            alt="InventNexus logo icon"
-            className="object-cover rounded-full"
+            fill
+            alt="Profile picture"
+            className="object-cover"
+            sizes="(max-width: 640px) 100vw, 192px"
+            priority
           />
         </div>
-        {/* username */}
-        <TabList TabName={"USERNAME"} Text={`This is your profile page`} />
 
-        {/*email  */}
-        <TabList TabName={"EMAIL"} Text={`This is your profile page`} />
+        {profileTabs.map((tab, index) =>
+          tab.href ? (
+            <TabLink
+              key={index}
+              tabName={tab.tabName}
+              text={tab.text}
+              href={tab.href}
+            />
+          ) : (
+            <Tab key={index} tabName={tab.tabName} text={tab.text} />
+          )
+        )}
 
-        {/*Role */}
-        <TabList TabName={"ROLE"} Text={`This is your profile page`} />
-
-        {/*website */}
-        <TabListLink
-          TabName={"WEBSITE"}
-          Text={`This is your profile page. `}
-          Href={""}
-        />
-
-        {/*inventnexus page*/}
-        <TabListLink
-          TabName={"INVENTNEXUS PAGE"}
-          Text={`This is your profile page. `}
-          Href={""}
-        />
-
-        {/*Location*/}
-        <TabList TabName={"LOCATION"} Text={`This is your profile page`} />
-
-        {/*BIO */}
-        <TabList
-          TabName={"BIO"}
-          Text={`This is your profile page. dkashfkffbekjadbvkjbvjad
-              fafkjjhgfgjanaddbvkjdvs fsdmkdfdsbjdsbvydbsdvmsdvds
-              fsdfjgddvjkvbvsdcbdvbhjvds .mdsjhdvhjcdmvsdvkjvdnkldv`}
-        />
-
-        {/*SOCIAL */}
-        <div className="column bg-blaze-orange-100 w-full mt-5 justify-items-start rounded-2xl mb-5">
-          <div className="container mb-2 font-bold pt-2 px-2 text-blaze-orange-950 border-solid border-b-white border-b-4">
-            <h2>SOCIAL MEDIA HANDLE</h2>
+        <div className="bg-white rounded-2xl p-4 mb-4 shadow-sm">
+          <h2 className="text-lg font-semibold text-gray-900 border-b-2 border-gray-200 pb-2">
+            SOCIAL MEDIA
+          </h2>
+          <div className="grid grid-cols-2 gap-2 mt-4">
+            {socialMediaLinks.map(({ Icon, name, href }, index) => (
+              <SocialMediaLink
+                key={index}
+                Icon={(props) => (
+                  <Icon {...props} className="text-blaze-orange-700" />
+                )}
+                Name={name}
+                Href={href}
+              />
+            ))}
           </div>
-          {/* social */}
-          <div className="px-2 mb-2 w-full justify-center items-center">
-          <SocialMediaLink Icon={FaceBookIcon} Name={"FACEBOOK"} Href={""} />
-          <SocialMediaLink Icon={WhatsappIcon} Name={"WHATSAPP"} Href={""} />
-          <SocialMediaLink Icon={LinkedinIcon} Name={"LINKEDIN"} Href={""} />
-          <SocialMediaLink Icon={InstagramIcon} Name={"INSTAGRAM"} Href={""} />
-          <SocialMediaLink Icon={XIcon} Name={"X"} Href={""} />
-          </div>
-
-
-          <div className="container h-5 px-2 pb-2"></div>
         </div>
       </div>
     </div>
   );
-}
-
-const TabList = ({ TabName, Text }) => {
-  return (
-    <div className="column bg-blaze-orange-100 w-full mt-5 justify-items-start rounded-2xl mb-5">
-      <div className="container mb-2 font-bold pt-2 px-2 text-blaze-orange-950 border-solid border-b-white border-b-4">
-        <h2>{TabName}</h2>
-      </div>
-      <div className="container px-2 pb-2 break-words">
-        <h3 className="mt-2 text-blaze-orange-600 ">{Text}</h3>
-      </div>
-    </div>
-  );
 };
 
-const TabListLink = ({ TabName, Text, Href }) => {
-  return (
-    <div className="column bg-blaze-orange-100 w-full mt-5 justify-items-start rounded-2xl mb-5">
-      <div className="container mb-2 font-bold pt-2 px-2 text-blaze-orange-950 border-solid border-b-white border-b-4">
-        <h2>{TabName}</h2>
-      </div>
-      <div className="container px-2 pb-2 break-words">
-        <Link href={Href} className="mt-2 text-blaze-orange-600 ">
-          {Text}
-        </Link>
-      </div>
-    </div>
-  );
-};
-
+export default ProfilePage;

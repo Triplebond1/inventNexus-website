@@ -1,7 +1,7 @@
 "use client";
-import Navbar from "../../components/header";
-import Footer from "../../components/footer";
-import Body from "../../components/privacyPolicy/body.js";
+import Navbar from "../../components/header.js";
+import Footer from "../../components/footer.js";
+import Body from "../../components/privacyPolicy/body.jsx";
 
 export default function Home() {
   return (

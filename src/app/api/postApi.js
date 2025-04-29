@@ -19,13 +19,8 @@ export const createPost = async (title, content, keyTakeAway, summary) => {
 
     const response = await axios.post(url, data, headers);
 
-    console.log("POST request successful. Response:", response.data);
     return response.data;
   } catch (error) {
-    console.error(
-      "Error in POST request:",
-      error.response?.data || error.message
-    );
     return { success: false, message: error.message };
   }
 };
@@ -39,13 +34,8 @@ export const getPostById = async (postId) => {
       },
     });
 
-    console.log("GET request successful. Response:", response.data);
     return response.data;
   } catch (error) {
-    console.error(
-      "Error in GET request:",
-      error.response?.data || error.message
-    );
     return { success: false, message: error.message };
   }
 };
@@ -79,13 +69,8 @@ export const getAllPost = async (
       },
     });
 
-    console.log("GET request successful. Response:", response.data);
     return response.data;
   } catch (error) {
-    console.error(
-      "Error in GET request:",
-      error.response?.data || error.message
-    );
     return { success: false, message: error.message };
   }
 };
@@ -99,13 +84,8 @@ export const updatePostStatus = async (postId, status) => {
 
     const response = await axios.put(url, data, headers);
 
-    console.log("POST request successful. Response:", response.data);
     return response.data;
   } catch (error) {
-    console.error(
-      "Error in POST request:",
-      error.response?.data || error.message
-    );
     // Handle specific errors here, e.g., if error.response exists, log status code
     return { success: false, message: error.message };
   }
@@ -159,13 +139,8 @@ export const updatePost = async (
 
     const response = await axios.put(url, data, headers);
 
-    console.log("PUT request successful. Response:", response.data);
     return response.data;
   } catch (error) {
-    console.error(
-      "Error in PUT request:",
-      error.response?.data || error.message
-    );
     return { success: false, message: error.message };
   }
 };
@@ -175,13 +150,8 @@ export const deletePost = async (postId) => {
   try {
     const response = await axios.delete(url, headers);
 
-    console.log("DELETE request successful. Response:", response.data);
     return response.data;
   } catch (error) {
-    console.error(
-      "Error in DELETE request:",
-      error.response?.data || error.message
-    );
     return { success: false, message: error.message };
   }
 };

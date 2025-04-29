@@ -1,6 +1,12 @@
 const bcrypt = require("bcryptjs");
 const User = require("../../models/user");
 const dotenv = require("dotenv");
+const {
+  validatePassword,
+  validateField,
+  validateRequiredField,
+  validateEmail,
+} = require("../../utilities/helpers/validateField");
 
 dotenv.config();
 
@@ -11,18 +17,9 @@ const createUserHandler = async (req, res) => {
   try {
     let { username, email, password, role, profilePicture } = req.body;
 
-    // Validate required fields
-    const validateField = (field, fieldName) => {
-      if (!field || typeof field !== "string") {
-        return res
-          .status(400)
-          .json({ message: `${fieldName} should be a string` });
-      }
-    };
-
-    validateField(username, "Username");
-    validateField(email, "Email");
-    validateField(password, "Password");
+    validateRequiredField(username, "Username", "string");
+    validateEmail(email);
+    validateRequiredField(password, "Password", "string");
 
     // Convert username and email to lowercase for uniformity
     username = username?.toLowerCase();
@@ -39,13 +36,7 @@ const createUserHandler = async (req, res) => {
     }
 
     // Password validation (at least one uppercase, one lowercase, one number, min 8 characters)
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-    if (password.length < 8 || !passwordRegex.test(password)) {
-      return res.status(400).json({
-        message:
-          "Password must be at least 8 characters long, contain one uppercase letter, one lowercase letter, and one number.",
-      });
-    }
+    validatePassword(password);
 
     // Check if the user with this email already exists
     const existingUser = await User.findOne({ email });
@@ -67,6 +58,7 @@ const createUserHandler = async (req, res) => {
       profilePicture,
     });
 
+    
     // Success response with user and profile data
     if (user) {
       return res.status(201).json({
@@ -152,19 +144,10 @@ const updateUserHandler = async (req, res) => {
     const userId = req.params.id;
     let { username, email, password, role, profilePicture } = req.body;
 
-    // Validate input fields
-    const validateStringField = (field, fieldName) => {
-      if (field && typeof field !== "string") {
-        return res
-          .status(400)
-          .json({ message: `${fieldName} should be a string` });
-      }
-    };
-
-    validateStringField(username, "Username");
-    validateStringField(email, "Email");
-    validateStringField(password, "Password");
-    validateStringField(role, "Role");
+    validateField(username, "Username", "string");
+    validateEmail(email);
+    validateField(password, "Password", "string");
+    validateField(role, "Role", "string");
 
     // Convert fields to lowercase where necessary
     username = username ? username.toLowerCase() : undefined;
@@ -184,13 +167,7 @@ const updateUserHandler = async (req, res) => {
 
     // Password validation
     if (password) {
-      const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
-      if (!passwordRegex.test(password)) {
-        return res.status(400).json({
-          message:
-            "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number",
-        });
-      }
+      validatePassword(password);
       const hashedPassword = await bcrypt.hash(password, 10);
       user.password = hashedPassword;
     }

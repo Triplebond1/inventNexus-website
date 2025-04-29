@@ -1,9 +1,12 @@
 const Category = require("../../models/category");
+const {
+  validateRequiredField,
+} = require("../../utilities/helpers/validateField");
 
 // @desc    Create a new category
 // @route   POST /v1/api/categories
 // @access  Private (admin, editor)
-const createCategoryHandler = async (req, res) => { 
+const createCategoryHandler = async (req, res) => {
   try {
     const { name, description } = req.body;
     const user = req.user;
@@ -16,12 +19,11 @@ const createCategoryHandler = async (req, res) => {
       return res
         .status(403)
         .json({ message: "You are not authorized to create a category" });
-      }
-      
-    // Check if name is provided
-    if (!name) {
-      return res.status(400).json({ message: "Category name is required" });
     }
+
+    // validate required field
+    validateRequiredField(name, "category name", "string");
+    validateRequiredField(description, "category description", "string");
 
     // Create a new category
     const newCategory = new Category({ name, description });
@@ -83,6 +85,9 @@ const updateCategoryHandler = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "User is not authenticated" });
     }
+    // validate field datatype
+    validateField(name, "category name", "string");
+    validateField(description, "category description", "string");
     // Authorization check: only admin, and editor can create a tag
     if (user.role !== "admin" && user.role !== "editor") {
       return res
@@ -92,7 +97,9 @@ const updateCategoryHandler = async (req, res) => {
 
     // Check if name is provided
     if (!name && !description) {
-      return res.status(400).json({ message: "Category name or description is required" });
+      return res
+        .status(400)
+        .json({ message: "Category name or description is required" });
     }
 
     // Update category

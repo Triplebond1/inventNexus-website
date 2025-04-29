@@ -4,7 +4,7 @@ import { FaceBookIcon, InstagramIcon, XIcon, LinkedinIcon } from "./svg/icons";
 
 export default function Footer() {
   return (
-    <footer className="w-screen flex flex-col items-center dark:bg-gray-100 bg-gray-100 justify-center border-t-4 border-blaze-orange-500 bg-gray-50 pt-4 pb-10">
+    <div>
       {/* Social Media Section */}
       <div className="mb-4 text-center">
         <p className="font-bold text-blaze-orange-600">
@@ -30,7 +30,7 @@ export default function Footer() {
       </div>
 
       {/* Copyright */}
-      <div className="text-center font-semibold text-blaze-orange-950">
+      <div className="text-center font-semibold text-gray-200">
         <p className="text-sm">
           &copy; {new Date().getFullYear()} InventNexus. All rights reserved.
         </p>
@@ -41,6 +41,6 @@ export default function Footer() {
           </span>
         </p>
       </div>
-    </footer>
+    </div>
   );
 }

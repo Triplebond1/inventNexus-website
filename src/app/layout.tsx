@@ -1,6 +1,6 @@
-
 import localFont from "next/font/local";
 import "./globals.css";
+import LayoutWrapper from "../components/layoutWrapper";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -24,21 +24,17 @@ export const metadata = {
 };
 
 export default function RootLayout({
-    children,
-  }: {
-    children: React.ReactNode;
-  },) {
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
-       
-       <main>{children}</main>
+        <LayoutWrapper>{children}</LayoutWrapper>
       </body>
     </html>
   );
 }
-
-

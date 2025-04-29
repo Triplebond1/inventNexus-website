@@ -104,70 +104,43 @@ const postSchema = new mongoose.Schema(
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
+        ref: "PostLike",
       },
     ],
-
-    likesCount: {
-      type: Number,
-      default: 0,
-    },
-
-    dislikesCount: {
-      type: Number,
-      default: 0,
-    },
 
     comments: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment",
+        ref: "PostComment",
       },
     ],
 
-    commentsCount: {
-      type: Number,
-      default: 0,
-    },
-
     coverImage: [
       {
-        imageUrl: { type: String, default: "" },
-        imageAltText: { type: String, trim: true, default: "" },
-        imageThumbnail: { type: String, default: "" },
-        imageWidth: { type: Number, default: 0 },
-        imageHeight: { type: Number, default: 0 },
-      },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Image",
+      }
     ],
 
     featuredImage: [
       {
-        imageUrl: { type: String, default: "" },
-        imageAltText: { type: String, trim: true, default: "" },
-        imageThumbnail: { type: String, default: "" },
-        imageWidth: { type: Number, default: 0 },
-        imageHeight: { type: Number, default: 0 },
-      },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Image",
+      }
     ],
 
     postOtherImages: [
       {
-        imageUrl: { type: String, default: "" },
-        imageAltText: { type: String, trim: true, default: "" },
-        imageThumbnail: { type: String, default: "" },
-        imageWidth: { type: Number, default: 0 },
-        imageHeight: { type: Number, default: 0 },
-      },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Image",
+      }
     ],
 
     featuredVideo: [
       {
-        videoUrl: { type: String, default: "" },
-        videoAltText: { type: String, trim: true, default: "" },
-        videoThumbnail: { type: String, default: "" },
-        videoWidth: { type: Number, default: 0 },
-        videoHeight: { type: Number, default: 0 },
-      },
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Video",
+      }
     ],
 
     schemaMarkup: {

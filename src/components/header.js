@@ -68,7 +68,7 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center h-16">
-        {/* Logo */}
+       
         {/* Logo */}
         <div className="flex items-center gap-2 text-2xl font-bold text-blaze-orange-950">
           <Image
@@ -140,10 +140,10 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="bg-white text-black md:hidden ">
-          <ul className="flex flex-col space-y-5 py-5 px-6 divide-y-2  divide-blaze-orange-400 font-semibold">
+          <ul className="flex flex-col   py-5 px-6 divide-y-2  divide-blaze-orange-400 font-semibold">
             {homeMenu &&
               homeMenu.map((item, index) => (
-                <li className=" box-border w-full" key={index}>
+                <li className=" pt-5 box-border w-full" key={index}>
                   <CustomLink Href={item.Href} Text={item.Text} />
                 </li>
               ))}

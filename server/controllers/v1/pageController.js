@@ -2,6 +2,10 @@ const Page = require("../../models/page");
 const Category = require("../../models/category");
 const Tag = require("../../models/tag");
 const populateSchemaMarkup = require("../../utilities/helpers/schemaMarkUp");
+const {
+  validateField,
+  validateRequiredField,
+} = require("../../utilities/helpers/validateField");
 
 // @desc    Create a new page
 // @route   POST /v1/api/pages
@@ -39,11 +43,24 @@ const createPageHandler = async (req, res) => {
     }
 
     // Validate required fields
-    if (!title || !content) {
-      return res
-        .status(400)
-        .json({ message: "Title and content, are required." });
-    }
+    validateRequiredField(title, "Title", "string");
+    validateRequiredField(content, "Content", "string");
+
+    //validate non required field data type
+    validateField(keyTakeAway, "Key take away", "string");
+    validateField(summary, "summary", "string");
+    validateField(postContributor, "Post contributor", "string");
+    validateField(metaDescription, "Meta description", "string");
+    validateField(parentPost, "parent Post", "string");
+    validateField(focuskeywords, "focus keywords", "string");
+    validateField(categories, "categories", "string");
+    validateField(tags, "tag", "string");
+    validateField(featuredImage, "featured image", "string");
+    validateField(coverImage, "cover image", "string");
+    validateField(featuredVideo, "featured video", "string");
+    validateField(status, "status", "string");
+    validateField(nextPage, "next page", "string");
+    validateField(previousPage, "previous page", "string");
 
     title = title.toLowerCase();
     content = content.toLowerCase();
@@ -187,12 +204,12 @@ const getAllPageHandler = async (req, res) => {
 
     // Filter by permalink if provided
     if (permalink) {
-      (query.permalink = permalink), console.log(query.permalink);
+      query.permalink = permalink;
     }
 
     // Filter by pagelink if provided
     if (pageLink) {
-      (query.pageLink = pageLink);
+      query.pageLink = pageLink;
     }
     // Filter by author if provided
     if (author) {
@@ -221,13 +238,13 @@ const getAllPageHandler = async (req, res) => {
 
     // Fetch page with the applied filters
     const page = await Page.find(query)
-    .populate("author", "username") // Populate author field
-    .populate("categories", "name") // Populate categories
-    .populate("tags", "name") //populate tags
-    .populate("parentPage", "title") // Populate parentPost
-    .populate("relatedPages", "postLink")
-    .populate("nextPage", "postLink")
-    .populate("previousPage", "postLink");
+      .populate("author", "username") // Populate author field
+      .populate("categories", "name") // Populate categories
+      .populate("tags", "name") //populate tags
+      .populate("parentPage", "title") // Populate parentPost
+      .populate("relatedPages", "postLink")
+      .populate("nextPage", "postLink")
+      .populate("previousPage", "postLink");
 
     // If no page found
     if (!page || page.length === 0) {
@@ -242,12 +259,12 @@ const getAllPageHandler = async (req, res) => {
 };
 
 // @desc    change the status of page to publish, archived or draft
-// @route   Put /v1/api/page/status
+// @route   Put /v1/api/page/status/:Id
 // @access  Private (Only admin, and editor should be able to update the status of a page)
 const updatePageStatusHandler = async (req, res) => {
   try {
-    let { pageId, status } = req.body;
-
+    let { status } = req.body;
+    const id = req.params;
     const user = req.user;
 
     if (!user) {
@@ -269,7 +286,7 @@ const updatePageStatusHandler = async (req, res) => {
     }
 
     // Fetch the page by ID
-    const page = await Page.findById(pageId);
+    const page = await Page.findById(id);
 
     if (!page) {
       return res.status(404).json({ message: "page not found." });
@@ -345,6 +362,24 @@ const updatePageHandler = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "User is not authenticated" });
     }
+
+    //validate non required field data type
+    validateField(title, "Title", "string");
+    validateField(content, "Content", "string");
+    validateField(keyTakeAway, "Key take away", "string");
+    validateField(summary, "summary", "string");
+    validateField(postContributor, "Post contributor", "string");
+    validateField(metaDescription, "Meta description", "string");
+    validateField(parentPost, "parent Post", "string");
+    validateField(focuskeywords, "focus keywords", "string");
+    validateField(categories, "categories", "string");
+    validateField(tags, "tag", "string");
+    validateField(featuredImage, "featured image", "string");
+    validateField(coverImage, "cover image", "string");
+    validateField(featuredVideo, "featured video", "string");
+    validateField(status, "status", "string");
+    validateField(nextPage, "next page", "string");
+    validateField(previousPage, "previous page", "string");
     // Check if the status is valid
     if (
       status &&

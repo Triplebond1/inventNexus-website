@@ -1,7 +1,4 @@
-import { ScrollBackToTop } from "../../../components/pageFeature/pageFeaturesClient";
 import Body from "../../../components/post/body";
-import Footer from "../../../components/footer";
-import Header from "../../../components/header";
 
 // export async function generateStaticParams() {
 //   const response = await fetch("https://your-backend.com/api/posts/slugs");
@@ -16,8 +13,10 @@ import Header from "../../../components/header";
 //   return response.json();
 // }
 
-export default function PostPage({}) {
-  // If no post is passed as a prop, we use some default data for demonstration  fjaj
+export default function PostPage({ params }) {
+  // If no post is passed as a prop, we use some default data for demonstration
+
+  const { slug } = params;
   const defaultPost = {
     title: "Sample Post Title",
     content:
@@ -36,19 +35,8 @@ export default function PostPage({}) {
   // State to toggle the "Back to Top" button based on scroll position.
 
   return (
-    <div className="min-h-screen w-full bg-gray-50 flex flex-col">
-      {/* Header*/}
-      <Header />
-      <main>
-        <Body post={post} />
-      </main>
-
-      {/* Footer */}
-
-      <Footer />
-
-      {/* Back to Top Button */}
-      <ScrollBackToTop />
+    <div className=" w-full bg-gray-50 min-h-screen dark:bg-gray-900 bg-white sm:w-4/6 flex flex-col mx-auto">
+      <Body post={post} />
     </div>
   );
 }

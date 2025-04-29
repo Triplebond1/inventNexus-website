@@ -32,7 +32,7 @@
     ".next/types/**/*.ts",
     "**/*.ts",
     "**/*.tsx"
-, "src/components/privateRoute.js", "src/app/api/createUser.js", "src/app/dashboard/page.js"  ],
+, "src/components/privateRoute.js", "src/app/api/createUser.js", "src/app/dashboard/page.js", "server/models/commentLike.js", "server/models/postLike.js", "server/models/video.js", "server/models/comment.js", "server/server.ts", "src/app/post/[slug]/page.js", "src/app/page.js", "src/components/carousel.js", "src/components/footer.js", "src/components/header.js", "src/app/dashboard/profile/page.js"  ],
   "exclude": [
     "node_modules"
   ]

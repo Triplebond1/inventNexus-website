@@ -1,7 +1,7 @@
 const express = require("express");
 const next = require("next");
 const dotenv = require("dotenv");
-//const connectDB = require("./src/db");
+const connectDB = require("./src/db");
 const apiApp = require("./src/app");
 
 dotenv.config();
@@ -16,7 +16,7 @@ const handle = nextApp.getRequestHandler();
     await nextApp.prepare();
 
     // Connect to MongoDB
-   //await connectDB();
+   await connectDB();
 
     // Create Express server
     const server = express();

@@ -6,8 +6,8 @@ const FaceBookIcon = ({}) => {
       <Image
         priority
         src="/svgIcons/facebook-svgrepo-com.svg"
-        height={32}
-        width={32}
+        height={25}
+        width={25}
         alt="Follow us on Twitter"
         className="bg-blue"
       />
@@ -21,8 +21,8 @@ const LinkedinIcon = ({}) => {
       <Image
         priority
         src="/svgIcons/linkedin-svgrepo-com.svg"
-        height={32}
-        width={32}
+        height={25}
+        width={25}
         alt="Follow us on Twitter"
         className="bg-blue"
       />

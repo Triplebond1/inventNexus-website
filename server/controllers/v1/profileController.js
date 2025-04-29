@@ -1,17 +1,34 @@
 const Profile = require("../../models/profile");
+const { validateField } = require("../../utilities/helpers/validateField");
 
 // @desc    Create a new profile
 // @route   POST /v1/api/profiles
 // @access  Private
 const createProfileHandler = async (req, res) => {
   try {
-    const { website, inventnexusPage, location, social, bio } = req.body;
+    const {
+      website,
+      inventnexusPage,
+      location,
+      social = { twitter, facebook, instagram, linkedin },
+      bio,
+    } = req.body;
     const user = req.user;
     const userId = user._id;
 
     if (!user) {
       return res.status(401).json({ message: "User is not authenticated" });
     }
+
+    validateField(website, "Website", "string");
+    validateField(inventnexusPage, "inventnexus page", "string");
+    validateField(location, "location", "stirng");
+    validateField(bio, "Bio", "string");
+    validateField(social.twitter, "twitter", "string");
+    validateField(social.facebook, "facebook", "string");
+    validateField(social.instagram, "instagram", "string");
+    validateField(social.linkedin, "linkedin", "string");
+
     // Check if profile already exists for the user
     const existingProfile = await Profile.findOne({ userEmail: userId });
     if (existingProfile) {
@@ -30,11 +47,16 @@ const createProfileHandler = async (req, res) => {
       userEmail: userId,
       userRole: userId,
       profilePicture: userId,
-      website: website || "",
-      inventnexusPage: inventnexusPage || "",
-      location: location || "",
-      social: social || {},
-      bio: bio || "",
+      website: website || null,
+      inventnexusPage: inventnexusPage || null,
+      location: location || null,
+      social: {
+        twitter: social.twitter ? social.twitter : null,
+        facebook: social.facebook ? social.facebook : null,
+        instagram: social.instagram ? social.instagram : null,
+        linkedin: social.linkedin ? social.linkedin : null,
+      },
+      bio: bio || null,
     });
 
     await newProfile.save();
@@ -95,14 +117,10 @@ const updateProfileHandler = async (req, res) => {
   try {
     const { id } = req.params;
     let {
-      userName,
-      userEmail,
-      userRole,
-      profilePicture,
       website,
       inventnexusPage,
       location,
-      social,
+      social = { twitter, facebook, instagram, linkedin },
       bio,
     } = req.body;
     const user = req.user;
@@ -110,6 +128,15 @@ const updateProfileHandler = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "User is not authenticated" });
     }
+
+    validateField(website, "Website", "string");
+    validateField(inventnexusPage, "inventnexus page", "string");
+    validateField(location, "location", "stirng");
+    validateField(bio, "Bio", "string");
+    validateField(social.twitter, "twitter", "string");
+    validateField(social.facebook, "facebook", "string");
+    validateField(social.instagram, "instagram", "string");
+    validateField(social.linkedin, "linkedin", "string");
 
     const profile = await Profile.findById(id);
     if (!profile) {
@@ -127,14 +154,16 @@ const updateProfileHandler = async (req, res) => {
     }
 
     // Update fields if provided
-    profile.userName = userName || profile.userName;
-    profile.userEmail = userEmail || profile.userEmail;
-    profile.userRole = userRole || profile.userRole;
     profile.profilePicture = profilePicture || profile.profilePicture;
     profile.website = website || profile.website;
     profile.inventnexusPage = inventnexusPage || profile.inventnexusPage;
     profile.location = location || profile.location;
-    profile.social = social || profile.social;
+    profile.social = {
+      twitter: social.twitter ? social.twitter : profile.social.twitter,
+      facebook: social.facebook ? social.facebook : profile.social.facebook,
+      instagram: social.instagram ? social.instagram : profile.social.instagram,
+      linkedin: social.linkedin ? social.linkedin : profile.social.linkedin,
+    };
     profile.bio = bio || profile.bio;
 
     await profile.save();
@@ -165,8 +194,6 @@ const deleteProfileHandler = async (req, res) => {
     if (!profile) {
       return res.status(404).json({ message: "Profile not found" });
     }
-
-    console.log(profile);
     // Authorization check (Assuming user is authenticated and has their `id` in `req.user._id`)
     if (
       profile.userName.toString() !== user._id.toString() ||

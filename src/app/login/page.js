@@ -54,6 +54,7 @@ export default function LogIn() {
         formData.usernameOrEmail,
         formData.password
       );
+      
       if (!response.success) {
         setErrors({ form: response.message });
       } else {

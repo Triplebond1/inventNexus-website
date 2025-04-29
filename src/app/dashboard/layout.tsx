@@ -1,7 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
-import String from "../ui/string";
+import { usePathname } from "next/navigation";
 import {
   HomeIcon,
   Cog8ToothIcon,
@@ -10,240 +10,223 @@ import {
   PencilSquareIcon,
   BookOpenIcon,
   PhotoIcon,
-  ChevronDoubleLeftIcon,
-  ChevronDoubleRightIcon,
+  ChevronDownIcon,
   BellIcon,
+  Bars3Icon,
 } from "@heroicons/react/24/solid";
 
-const Sidebar = () => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
 
-  const toggleSidebar = () => setIsCollapsed(!isCollapsed);
 
-  const menuItems = [
+const Sidebar = ({ isOpen, toggleSidebar }) => {
+  const pathname = usePathname();
+  const [expandedItems, setExpandedItems] = useState({});
+
+  const menuItems = useMemo(() =>[
     {
-      title: "Post",
+      title: "Home",
+      icon: HomeIcon,
+      navLink: "/dashboard",
+    },
+    {
+      title: "Posts",
       icon: PencilSquareIcon,
-      navLink: "/dashboard/post",
-      links: [
-        { url: "/posts/all-posts", label: "All Posts" },
-        { url: "/posts/add-new", label: "Add New Post" },
-        { url: "/posts/categories", label: "Categories" },
-        { url: "/posts/tags", label: "Tags" },
+      navLink: "/dashboard/posts",
+      subItems: [
+        { url: "/dashboard/posts", label: "All Posts" },
+        { url: "/dashboard/posts/addNewPost", label: "Add New" },
+        { url: "/dashboard/posts/categories", label: "Categories" },
+        { url: "/dashboard/posts/tags", label: "Tags" },
       ],
     },
     {
-      title: "Page",
+      title: "Pages",
       icon: BookOpenIcon,
-      navLink: "/dashboard/page",
-      links: [
-        { url: "/pages/all-pages", label: "All Pages" },
-        { url: "/pages/add-new", label: "Add New Page" },
+      navLink: "/dashboard/pages",
+      subItems: [
+        { url: "/dashboard/pages", label: "All Pages" },
+        { url: "/dashboard/pages/addNewPage", label: "Add New" },
       ],
     },
     {
       title: "Media",
       icon: PhotoIcon,
       navLink: "/dashboard/media",
-      links: [
-        { url: "/media/library", label: "Library" },
-        { url: "/media/add-new", label: "Add New Media" },
+      subItems: [
+        { url: "/dashboard/media", label: "Library" },
+        { url: "/dashboard/media/upload", label: "Add New" },
       ],
     },
-  ];
+    {
+      title: "Profile",
+      icon: IdentificationIcon,
+      navLink: "/dashboard/profile",
+    },
+    {
+      title: "Users",
+      icon: UserCircleIcon,
+      navLink: "/dashboard/users",
+    },
+    {
+      title: "Settings",
+      icon: Cog8ToothIcon,
+      navLink: "/dashboard/settings",
+    },
+  ], []);
+
+  useEffect(() => {
+    const initialExpanded = {};
+    menuItems.forEach((item) => {
+      if (
+        item.subItems &&
+        item.subItems.some((sub) => pathname.startsWith(sub.url))
+      ) {
+        initialExpanded[item.title] = true;
+      }
+    });
+    setExpandedItems(initialExpanded);
+  }, [pathname, menuItems]);
+
+  const toggleItem = (item) => {
+    setExpandedItems((prev) => ({ ...prev, [item]: !prev[item] }));
+  };
 
   return (
-    <div
-      className={`flex flex-col ${
-        isCollapsed ? "w-20" : "w-40"
-      } h-[100%] bg-blaze-orange-950 font-bold text-white flex-wrap`}
+    <aside
+      className={`fixed inset-y-0 left-0 w-64 bg-gray-900 text-white transform ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      } md:static md:translate-x-0 transition-transform duration-300 z-40 flex flex-col`}
     >
-
-      <nav className="mt-4 space-y-2">
-        {isCollapsed ? 
-          // {is collapsed}
-          (
-          <div>
-            {/* Logo */}
-            <div className="flex w-20 h-16 items-center justify-between px-2 text-center font-bold text-xl border-b border-gray-300">
-              {/* SVG Logo */}
-              <div className= "w-14 h-10 ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 150 100"
-                  width="30"
-                  height="35"
+      <div className="flex items-center justify-between p-4 border-b border-gray-800">
+        <span className="text-xl font-bold">InventNexus</span>
+        <button
+          onClick={toggleSidebar}
+          className="md:hidden text-gray-300 hover:text-white"
+        >
+          <BellIcon className="w-5 h-5" />
+        </button>
+      </div>
+      <nav className="flex-1 overflow-y-auto p-2 space-y-1">
+        {menuItems.map((item) => {
+          const isActive = item.subItems
+            ? pathname.startsWith(item.navLink)
+            : pathname === item.navLink;
+          return (
+            <div key={item.title}>
+              <div
+                className={`flex items-center px-4 py-2 rounded-lg ${
+                  isActive ? "bg-gray-800 text-blue-400" : "hover:bg-gray-800"
+                }`}
+              >
+                <Link
+                  href={item.navLink}
+                  className="flex items-center flex-1"
+                  onClick={() => isOpen && toggleSidebar()}
                 >
-                  <text
-                    x="50%"
-                    y="50%"
-                    dominantBaseline="middle"
-                    textAnchor="middle"
-                    fontFamily="Arial, sans-serif"
-                    fontSize="150"
-                    fill="#ffffff"
+                  <item.icon className="w-5 h-5 mr-3" />
+                  <span>{item.title}</span>
+                </Link>
+                {item.subItems && (
+                  <button
+                    onClick={() => toggleItem(item.title)}
+                    className="ml-auto"
                   >
-                    IN
-                  </text>
-                </svg>
+                    <ChevronDownIcon
+                      className={`w-5 h-5 transition-transform ${
+                        expandedItems[item.title] ? "rotate-180" : ""
+                      }`}
+                    />
+                  </button>
+                )}
               </div>
-
-              {/* Toggle Button */}
-              <div className="w-6 h-10 items-end">
-                <button
-                  onClick={toggleSidebar}
-                  className="p-1 bg-gray rounded hover:bg-blaze-orange-600 focus:outline-none"
-                >
-                  {isCollapsed ? (
-                    <ChevronDoubleRightIcon className="w-4 h-3 text-black" />
-                  ) : (
-                    <ChevronDoubleLeftIcon className="w-6 h-5 text-black" />
-                  )}
-                </button>
-              </div>
-            </div>
-
-            {/* home static link */}
-            <Link href="/dashboard" className="block px-4 py-2 hover:bg-blaze-orange-600">
-              <HomeIcon className="size-6 text-blue-500" />
-            </Link>
-
-            {/* Dynamic Links */}
-            {menuItems.map((item) => (
-              <div className="group" key={item.title}>
-                <Link href= {item.navLink} className="block px-4 py-2  hover:bg-blaze-orange-600">
-                  {<item.icon className="size-6 text-blue-500" />}
-                </Link>
-                <div className="ml-4 hidden group-hover:block">
-                  {item.links.map((link) => (
+              {item.subItems && expandedItems[item.title] && (
+                <div className="ml-6 space-y-1">
+                  {item.subItems.map((sub) => (
                     <Link
-                      href={link.url}
-                      key={link.label}
-                      className="block px-4 py-2 hover:bg-blaze-orange-600"
+                      key={sub.label}
+                      href={sub.url}
+                      className={`block px-4 py-1 text-sm rounded-lg ${
+                        pathname === sub.url
+                          ? "bg-gray-800 text-blue-400"
+                          : "hover:bg-gray-800"
+                      }`}
+                      onClick={() => isOpen && toggleSidebar()}
                     >
-                      {link.label}
+                      {sub.label}
                     </Link>
                   ))}
                 </div>
-              </div>
-            ))}
-
-            {/* Static Links */}
-            <Link href="/dashboard/profile" className="block px-4 py-2 hover:bg-blaze-orange-600">
-              <IdentificationIcon className="size-6 text-blue-500" />
-            </Link>
-            <Link href="/dashboard/user" className="block px-4 py-2 hover:bg-blaze-orange-600">
-              <UserCircleIcon className="size-6 text-blue-500" />
-            </Link>
-            <Link href="/dashboard/settings" className="block px-4 py-2 hover:bg-blaze-orange-600">
-              <Cog8ToothIcon className="size-6 text-blue-500" />
-            </Link>
-          </div>
-
-        ) :
-          // {isnot collapsed}
-          (
-            <div>
-              
-              <div className="flex w-40 h-16 items-center justify-between px-2 text-center font-bold text-lg border-b border-gray-300">
-              {/* Logo */}
-              <div className= "w-25 h-10 ">
-              {String.siteName}
-              </div>
-
-              {/* Toggle Button */}
-              <div className="w-10 h-10 items-end">
-                <button
-                  onClick={toggleSidebar}
-                  className=" bg-gray rounded hover:bg-blaze-orange-600 focus:outline-none p-1 m-1"
-                >
-                  {isCollapsed ? (
-                    <ChevronDoubleRightIcon className="w-5 h-3 text-black" />
-                  ) : (
-                    <ChevronDoubleLeftIcon className="w-5 h-3 text-black" />
-                  )}
-                </button>
-              </div>
+              )}
             </div>
-
-            {/* home static link */}
-            <Link href="/dashboard" className="block px-4 py-2 hover:bg-blaze-orange-600">
-              Home
-            </Link>
-
-            {/* Dynamic Links */}
-            {menuItems.map((item) => (
-              <div className="group" key={item.title}>
-                <Link href= {item.navLink} className="block px-4 py-2 cursor-pointer hover:bg-blaze-orange-600">
-                  {item.title}
-                </Link>
-                <div className="ml-4 hidden group-hover:block">
-                  {item.links.map((link) => (
-                    <Link
-                      href={link.url}
-                      key={link.label}
-                      className="block px-4 py-2 hover:bg-blaze-orange-600"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            ))}
-
-            {/* Static Links */}
-
-            <Link href="/dashboard/profile" className="block px-4 py-2 hover:bg-blaze-orange-600">
-              Profile
-            </Link>
-            <Link href="/dashboard/user" className="block px-4 py-2 hover:bg-blaze-orange-600">
-              User
-            </Link>
-            <Link href="/dashboard/settings" className="block px-4 py-2 hover:bg-blaze-orange-600">
-              Settings
-            </Link>
-          </div>
-        )}
+          );
+        })}
       </nav>
-    </div>
+    </aside>
   );
 };
 
-const Topbar = ({ toggleCollapse }) => {
+const Topbar = ({ toggleSidebar, user }) => {
+  const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+
   return (
-    <div className="flex justify-between items-center h-20 bg-blaze-orange-950 text-white px-4">
-      <button onClick={toggleCollapse} className="text-white">
-        <span className="material-icons hover:text-blaze-orange-600 font-bold">menu</span>
-      </button>
-      <span className="font-bold  hover:text-blaze-orange-600">Dashboard</span>
-      <div className="flex items-center space-x-4">
-        <BellIcon className="size-6 text-blue-500  hover:text-blaze-orange-600" />
-        <UserCircleIcon className="size-6 text-blue-500  hover:text-blaze-orange-600" />
+    <header className="bg-gray-900 text-white h-16 flex items-center justify-between px-4 border-b border-gray-800 sticky top-0 z-30">
+      <div className="flex items-center">
+        <button
+          onClick={toggleSidebar}
+          className="md:hidden text-gray-300 hover:text-white mr-4"
+        >
+          <Bars3Icon className="w-6 h-6" />
+        </button>
+        <h1 className="text-lg font-semibold">Dashboard</h1>
       </div>
-    </div>
+      <div className="flex items-center space-x-4">
+        <button className="text-gray-300 hover:text-white">
+          <BellIcon className="w-6 h-6" />
+        </button>
+        <div className="relative">
+          <button
+            onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}
+            className="flex items-center text-gray-300 hover:text-white"
+          >
+            <UserCircleIcon className="w-6 h-6" />
+          </button>
+          {isUserDropdownOpen && (
+            <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg p-2 text-sm">
+              <p className="font-medium text-gray-300">{user.name}</p>
+              <Link
+                href="/dashboard/profile"
+                className="block py-1 hover:text-blue-400"
+              >
+                Profile
+              </Link>
+              <button className="block w-full text-left py-1 hover:text-blue-400">
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </header>
   );
 };
 
 const DashboardLayout = ({ children }) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const toggleSidebar = () => setIsSidebarOpen(!isSidebarOpen);
 
-  const toggleCollapse = () => setIsCollapsed(!isCollapsed);
+  const user = { name: "John Doe" }; // Mock user data
 
   return (
-    <div className="flex h-screen w-full">
-      {/* Sidebar Section */}
-      <Sidebar />
-
-      {/* Main Content Section */}
+    <div className="min-h-screen bg-gray-100 flex">
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 md:hidden"
+          onClick={toggleSidebar}
+        />
+      )}
+      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
       <div className="flex-1 flex flex-col">
-        
-        {/* Topbar */}
-        <Topbar toggleCollapse={toggleCollapse} />
-
-        {/* Main Content */}
-        <main className="p-4 bg-blaze-orange-50 flex-1 overflow-y-auto">
-          {children}
-        </main>
+        <Topbar toggleSidebar={toggleSidebar} user={user} />
+        <main className="flex-1 p-6 overflow-y-auto">{children}</main>
       </div>
     </div>
   );

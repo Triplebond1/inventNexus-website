@@ -1,71 +1,38 @@
 const mongoose = require("mongoose");
 
+
 const commentSchema = new mongoose.Schema(
   {
-    post: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Post",
-      required: true,
-    },
-
-    author: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-
-    parentComment: {
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    parentCommentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment",
-      default: null, // For nested comments (replies)
+      default: null,
     },
-
-    content: {
-      type: String,
-      required: true,
-      maxlength: 1000,
-    },
-
-    likes: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
-
-    likesCount: {
-      type: Number,
-      default: 0,
-    },
-
-    dislikes: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
-
-    dislikesCount: {
-      type: Number,
-      default: 0,
-    },
-
+    content: { type: String, required: true, maxlength: 1000 },
+    likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "CommentLike" }],
     status: {
       type: String,
       enum: ["pending", "approved", "rejected"],
-      default: "pending", // Default status is pending
+      default: "pending",
     },
-
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
+    createdAt: { type: Date },
+    updatedAt: { type: Date },
   },
-  {
-    timestamps: true,
-  }
+  { _id: true,  timestamps: true}
 );
 
-// Create and export the comment model
-const Comment = mongoose.model("Comment", commentSchema);
-module.exports = Comment;
+const postCommentSchema = new mongoose.Schema(
+  {
+    postId: { type: mongoose.Schema.Types.ObjectId, ref: "Post", required: true },
+    commentList: [commentSchema],
+    commentCount: { type: Number, default: 0 },
+  },
+  { timestamps: true }
+);
+
+const PostComment = mongoose.model(
+  "PostComment",
+  postCommentSchema
+);
+module.exports = PostComment;

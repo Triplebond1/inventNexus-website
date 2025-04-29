@@ -1,4 +1,8 @@
 const Comment = require("../../models/comment");
+const {
+  validateRequiredField,
+  validateField,
+} = require("../../utilities/helpers/validateField");
 
 // @desc    Create a new comment
 // @route   POST /v1/api/comment
@@ -11,12 +15,10 @@ const createCommentHandler = async (req, res) => {
     if (!user) {
       return res.status(401).json({ message: "User is not authenticated" });
     }
-    // Validate necessary fields
-    if (!postId || !content) {
-      return res
-        .status(400)
-        .json({ message: "Post and content are required." });
-    }
+
+    validateRequiredField(postId, "post ID", "string");
+    validateRequiredField(content, "comment content", "string");
+    validateField(parentComment, "parent comment", "string");
 
     // Determine the comment status based on the user's role
     let status = "pending"; // Default to "pending"
@@ -45,15 +47,17 @@ const createCommentHandler = async (req, res) => {
 };
 
 // @desc    Approve or Reject a new comment
-// @route   POST /v1/api/comment
+// @route   POST /v1/api/comment/:id
 // @access  Private (Only an admin, editor, or author and postContributor of the post --
 //should be able to update the status of a comment to "approved" or "rejected")
 const updateCommentStatusHandler = async (req, res) => {
   try {
     const user = req.user;
-    const { commentId, status } = req.body;
+    const id = req.params;
+    const { status } = req.body;
 
-    if (!user) {
+    const allowedRoles = ["admin", "editor", "author"];
+    if (!user || !allowedRoles.includes(user.role)) {
       return res.status(401).json({ message: "User is not authenticated" });
     }
     // Check if the status is valid
@@ -62,13 +66,13 @@ const updateCommentStatusHandler = async (req, res) => {
     }
 
     // Fetch the comment by ID
-    const comment = await Comment.findById(commentId).populate({
+    const comment = await Comment.findById(id).populate({
       path: "post",
       populate: {
         path: "author", // This ensures the post's author is also populated
         select: "_id", // Only selecting the _id field of the post's author
         path: "postContributor", // This ensures the post's postContributor is also populated
-        select: "_id", 
+        select: "_id",
       },
     });
 
@@ -83,9 +87,9 @@ const updateCommentStatusHandler = async (req, res) => {
       comment.post.postContributor._id.toString() !== user._id.toString() &&
       comment.post.author._id.toString() !== user._id.toString()
     ) {
-      return res
-        .status(403)
-        .json({ message: "You are not authorized to update this comment status." });
+      return res.status(403).json({
+        message: "You are not authorized to update this comment status.",
+      });
     }
 
     // Update the comment status
@@ -127,6 +131,7 @@ const getCommentsByPostHandler = async (req, res) => {
   try {
     const { postId } = req.params;
 
+    validateField(postId, "post ID", "string");
     const comments = await Comment.find({ post: postId })
       .populate("author", "name")
       .populate("parentComment")
@@ -204,9 +209,7 @@ const updateCommentHandler = async (req, res) => {
       return res.status(401).json({ message: "User is not authenticated" });
     }
 
-    if (!content) {
-      return res.status(400).json({ message: "Content is required" });
-    }
+    validateRequiredField(content, "content", "string");
 
     // Find the comment by ID
     const comment = await Comment.findById(id);
@@ -252,7 +255,7 @@ const deleteCommentHandler = async (req, res) => {
         path: "author", // This ensures the post's author is also populated
         select: "_id", // Only selecting the _id field of the post's author
         path: "postContributor", // This ensures the post's postContributor is also populated
-        select: "_id", 
+        select: "_id",
       },
     });
 

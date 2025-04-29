@@ -191,7 +191,9 @@ const deleteImageHandler = async (req, res) => {
     const { id } = req.params;
     user = req.user;
 
-    if (!user) {
+    const allowedRoles = ['admin', 'editor', 'author'];
+    
+    if (!user ||  !allowedRoles.includes(user.role)) {
       return res.status(401).json({ message: "User is not authenticated" });
     }
     const image = await Image.findById(id);
